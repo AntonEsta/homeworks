@@ -1,13 +1,14 @@
 package lec04.task01;
 
+import java.util.Formatter;
 import java.util.Objects;
 
 enum Sex {MAN, FEMALE}
 
-public class Person {
-    String name;
-    int age;
-    Sex sex;
+class Person {
+    private String name;
+    private int age;
+    private Sex sex;
 
     public Person(String name, int age, Sex sex) {
         this.name = name;
@@ -15,23 +16,35 @@ public class Person {
         this.sex = sex;
     }
 
-//    private String normalizeName(String name){
-//        if (name != null) {
-//            name = name.toLowerCase();
-//            char ch = name.charAt(0);
-//            name(0) String.valueOf(ch).toLowerCase();
-//            name.charAt(0);
-//        }
-//        return "";
-//    }
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Sex getSex() {
+        return sex;
+    }
+
+    public void setSex(Sex sex) {
+        this.sex = sex;
+    }
 
     @Override
     public String toString() {
-        return "name: " + name +
-                "; age: " + age +
-                "; sex:" + sex + "\n";
-        //        return super.toString();
+        Formatter format = new Formatter();
+        format.format("name: %6s; age: %3s; sex: %6s", name, age, sex);
+        return format.toString();
     }
 
     @Override

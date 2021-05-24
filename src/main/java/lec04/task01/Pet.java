@@ -1,23 +1,57 @@
 package lec04.task01;
 
+import java.util.Formatter;
 import java.util.Objects;
 
-public class Pet {
-    String nickname;    // кличка
-    float weight;       // вес
+final class Pet {
+    private long id;
+    private String nickname;    // кличка
+    private float weight;       // вес
+    private Person owner;
+
 
     /* Конструктор */
-    public Pet(String nickname, float weight){
+    public Pet(String nickname, float weight, Person owner){
         this.nickname = nickname;
         this.weight = weight;
+        this.owner = owner;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public Person getOwner() {
+        return owner;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void setOwner(Person owner) {
+        this.owner = owner;
     }
 
     /* Override Methods */
 
     @Override
     public String toString() {
-        return  "nickname: " + nickname +
-                "; weight: " + weight + "\n";
+        Formatter ft = new Formatter();
+        ft.format("nickname: %6s; weight: %3.1f; owner: [%s] %n", nickname, weight, owner);
+        return ft.toString();
     }
 
     @Override
