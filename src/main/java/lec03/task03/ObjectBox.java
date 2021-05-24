@@ -22,7 +22,7 @@ public class ObjectBox {
      * @param o добовляемый объект
      * @return true усли объект был добавлен
      */
-    public boolean addObject(Object o){
+    public boolean addObject(Object o) throws Exception {
         return this.objects.add(o);
     }
 

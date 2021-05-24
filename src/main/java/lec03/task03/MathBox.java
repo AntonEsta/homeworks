@@ -15,12 +15,14 @@ public class MathBox<T extends Number> extends ObjectBox {
 
         super(new HashSet<T>());
 
-        if (numbers != null) {              // проверка на пустой массив
+        if (numbers == null) return;             // проверка на пустой массив
 
-            for (Number num : numbers) {    // заполнение массива
+        for (Number num : numbers) {    // заполнение массива
+            try {
                 addObject(num);
+            } catch (Exception e) {
+                return;
             }
-
         }
     }
 
@@ -29,14 +31,9 @@ public class MathBox<T extends Number> extends ObjectBox {
      * При добавлении объекта класса {@code Object} генерируется исключение {@code Exception}.
      */
     @Override
-    public boolean addObject(Object o) {
-        if (o.getClass() != Object.class) {     // проверяем на принадлежность к классу Object
-            return super.addObject(o);
-        } else {                                // исключение при o == Object class
-            Exception e = new Exception("You can't use the Object class with the addObject method of the MathBox class.");
-            System.out.println(e.fillInStackTrace().toString());
-        }
-        return false;
+    public boolean addObject(Object o) throws Exception {
+        if (o.getClass() != Object.class) return super.addObject(o);     // проверяем на принадлежность к классу Object
+        throw new Exception("You can't use the Object class with the addObject method of the MathBox class.");
     }
 
     /**

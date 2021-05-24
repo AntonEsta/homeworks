@@ -14,13 +14,9 @@ public class MathBox<T extends Number> {
      * @see Number
      */
     MathBox(Number[] numbers) {
-
-        if (numbers != null) {
-
-            for (Number num : numbers) {
-                this.numbers.add((T) num);
-            }
-
+        if (numbers == null) return;
+        for (Number num : numbers) {
+            this.numbers.add((T) num);
         }
     }
 

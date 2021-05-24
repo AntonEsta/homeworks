@@ -1,5 +1,7 @@
 package lec03.task03;
 
+import jdk.nashorn.internal.runtime.ECMAException;
+
 import java.util.Random;
 
 public class test {
@@ -48,8 +50,12 @@ public class test {
         System.out.println("HashCode: " + mathBox2.hashCode());
 
         mathBox.dump();
+        try {
+            mathBox.addObject(90);
+        } catch (Exception e) {
+            System.out.printf("Exception! : %s", e);
+        }
 
-        mathBox.addObject(90);
         mathBox.dump();
 
     }

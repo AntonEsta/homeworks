@@ -1,0 +1,14 @@
+lec03/task01/test.java
+ lec03.task01.test
+lec03/task02/ObjectBox.java
+ lec03.task02.ObjectBox
+lec03/task03/ObjectBox.java
+ lec03.task03.ObjectBox
+lec03/task01/MathBox.java
+ lec03.task01.MathBox
+lec03/task03/MathBox.java
+ lec03.task03.MathBox
+lec03/task02/test.java
+ lec03.task02.test
+lec03/task03/test.java
+ lec03.task03.test
