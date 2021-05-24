@@ -1,84 +1,72 @@
 package lec04.task01;
 
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
  * Класс выполняет роль картотеки домашних питомцев.
  */
-final class CardFile {
 
-    private TreeMap<Long, Pet> pets = new TreeMap<>();
+@ToString
+@EqualsAndHashCode
+@FieldDefaults(level=AccessLevel.PRIVATE)
+public class CardFile {
 
-    public Pet getPet(long id) {
-        return pets.get(id);
-    }
-
-    /**
-     * Генерирует новый Id для карты.
-     * @param pet новая карта которую необходимо добавить.
-     * @return значение нового Id.
-     */
-    private Long generatorId(Pet pet) throws Exception {
-        long id;
-        try {
-            if (pets.isEmpty()) {
-                id = 1L;
-            } else {
-                if (pets.containsValue(pet)) {
-                    throw new Exception("Attempt to add a duplicate record!");
-                }
-                id = pets.lastKey() + 1;
-            }
-        } catch (NullPointerException e) {
-            id = 1L;
-        }
-        return id;
-    }
+    /*TODO: >? При использовании lombok.var IDE требует кастовать HashMap!
+    * TODO     private var pets = (var) new TreeMap<UUID, Pet>();
+    *  */
+//    private var pets = (var) new TreeMap<UUID, Pet>();
+    final HashMap<@NonNull UUID, Pet> pets = new HashMap<>();
 
     /**
      * Добавляет новую карту питомца в картотеку.
      * @param pet карта для добавления в картотеку.
-     * @return значение ID добавленной карты питомца.
+     * @return значение {@link UUID} добавленной карты питомца или {@code null} при не удачном добавлении.
      */
-    public Long addPet(Pet pet) throws Exception {
-        long id = generatorId(pet);
-        pets.put(id, pet);
-        return id;
+    public UUID addPet(@NonNull Pet pet) throws DuplicateValueException {
+        if (!pets.isEmpty() & pets.containsValue(pet)) throw new DuplicateValueException();
+        UUID id;
+        do {
+            id = UUID.randomUUID();
+        } while (pets.containsKey(id));
+        return (pets.put(id, pet) != null) ? id : null;
     }
 
     /**
-     * Обновляет информацию о питомце по его id.
-     * @param id имя код питомца {@code long}
-     * @param pet информация о питомце питомце {@code Pet}
-     * @return объект питомец {@code Pet}.
+     * Добавляет новую карту питомца в картотеку.
+     * @param nickname имя питомца типа {@code String}
+     * @param weight вес питомца типа {@code float}
+     * @param owner владельца питомца типа {@code Person}
+     * @return значение ID добавленной карты питомца.
      */
-    public Pet setPet(long id, Pet pet) {
-        return pets.put(id, pet);
+    public UUID addPet(@NonNull String nickname, @NonNull float weight, @NonNull Person owner) throws Exception {
+        Pet pet = new Pet(nickname, weight, owner);
+        return addPet(pet);
     }
 
     /**
      * Удаляет карту питомца.
-     * @param id номер (ID) карты питомца.
+     * @param id номер {@link UUID} питомца.
      * @return возвращает {@code true} при успешном удалении карты.
      */
-    public boolean deletePet(Long id) {
+    public boolean deletePet(UUID id) {
         return pets.remove(id) != null;
     }
 
     /**
-     * Поиск карт по кличке питомца.
+     * Поиск питомца(ев) по его кличке.
      * @param nickname кличка питомца.
-     * @return картотека {@code CardFile} с картами найденных питомцев.
+     * @return {@link CardFile} найденных питомцев или {@code null} если негде искать.
      */
-    public TreeMap<Long, Pet> findPet(String nickname){
-        TreeMap<Long, Pet> pt = new TreeMap<>();
-        if (pets.isEmpty()) return pt;
-        Map<Long, Pet> map = pets.entrySet().stream()
+    public HashMap<@NonNull UUID, Pet> findPet(String nickname){
+        if (pets.isEmpty()) return null;
+        Map<@NonNull UUID, Pet> map = pets.entrySet().stream()
                 .filter(e -> e.getValue().getNickname().equals(nickname))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        pt.putAll(map);
-        return pt;
+        return new HashMap<>(map);
     }
 
     /**
@@ -93,26 +81,13 @@ final class CardFile {
         return (ArrayList<Pet>) pets.values().stream()
                 .sorted((p, o) -> {
                     int result = p.getOwner().getName().compareToIgnoreCase(o.getOwner().getName());
-                    if (result == 0){
-                        result = p.getNickname().compareToIgnoreCase(o.getNickname());
-                        if (result == 0) {
-                            result = Float.compare(p.getWeight(), o.getWeight()) * -1;
-                        }
-                    }
+                    if (result != 0) return result;
+                    result = p.getNickname().compareToIgnoreCase(o.getNickname());
+                    if (result != 0) return result;
+                    result = Float.compare(p.getWeight(), o.getWeight()) * -1;
                     return result;
                 })
                 .collect(Collectors.toList());
     }
 
-    /* Override Methods */
-
-    @Override
-    public String toString() {
-        Iterator<Map.Entry<Long, Pet>> iterator = pets.entrySet().iterator();
-        StringBuilder str = new StringBuilder("CardFile include ...\n");
-        while (iterator.hasNext()) {
-            str.append(iterator.next()).append("\n");
-        }
-        return str.toString();
-    }
 }
