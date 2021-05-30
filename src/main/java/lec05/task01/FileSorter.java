@@ -16,16 +16,14 @@ public class FileSorter {
 
         int foundWords = 0;
         HashSet<String> words = new HashSet<>();
-        char[] latCharTable = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").toCharArray();
-        char[] kirCharTable = ("ЁАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюяё").toCharArray();
 
         try (FileReader reader = new FileReader(inputFileName);
              BufferedReader br = new BufferedReader(reader)) {
             StringBuilder str = new StringBuilder();
             int ch;
             while ((ch = br.read()) != -1) {
-                if (Arrays.binarySearch(latCharTable, (char) ch) >= 0 ||
-                        Arrays.binarySearch(kirCharTable, (char) ch) >= 0) {
+                if (Arrays.binarySearch(CharacterTables.latinLettersCharArray, (char) ch) >= 0 ||
+                        Arrays.binarySearch(CharacterTables.cyrillicLettersCharArray, (char) ch) >= 0) {
                     str.append((char) ch);
                 } else {
                     if (str.toString().isEmpty()) continue;
@@ -55,15 +53,13 @@ public class FileSorter {
 
         int foundWords = 0;
         HashSet<String> words = new HashSet<>();
-        char[] latCharTable = ("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz").toCharArray();
-        char[] kirCharTable = ("ЁАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмнопрстуфхцчшщъыьэюяё").toCharArray();
 
         try (BufferedReader br = Files.newBufferedReader(Paths.get(inputFileName))) {
             StringBuilder str = new StringBuilder();
             int ch;
             while ((ch = br.read()) != -1) {
-                if (Arrays.binarySearch(latCharTable, (char) ch) >= 0 ||
-                        Arrays.binarySearch(kirCharTable, (char) ch) >= 0) {
+                if (Arrays.binarySearch(CharacterTables.latinLettersCharArray, (char) ch) >= 0 ||
+                        Arrays.binarySearch(CharacterTables.cyrillicLettersCharArray, (char) ch) >= 0) {
                     str.append((char) ch);
                 } else {
                     if (str.toString().isEmpty()) continue;
