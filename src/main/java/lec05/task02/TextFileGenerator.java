@@ -11,68 +11,80 @@ import java.util.Random;
 
 public class TextFileGenerator {
 
+    final char separator = ' ';
+    final char[] endOfSentence = {'.','!','?'};
+    final int maxLengthOfWord = 15;
+    final int maxCountOfWords = 15;
+    final int maxLengthOfParagraph = 20;
+
+    Random rnd = new Random();
+
+    private String getWord(int maxLengthOfWord, boolean firstUpperCase) {
+//        StringBuilder buffer = new StringBuilder();
+        int lengthOfWord = rnd.nextInt(maxLengthOfWord);
+        StringBuilder word = new StringBuilder();
+        // Формируем слово
+        while (word.length() < lengthOfWord) {
+            int i = rnd.nextInt((CharacterTables.latinLowerCaseCharArray.length - 2) + 1);
+            if (i == 0) System.out.println("!!! zero !!!");
+            if (firstUpperCase) {
+                word.append(CharacterTables.latinUpperCaseCharArray[i]);
+                firstUpperCase = false;
+            } else {
+                word.append(CharacterTables.latinLowerCaseCharArray[i]);
+            }
+        }
+        return word.toString();
+    }
+
+
+    private String getSentence() {
+        StringBuilder sentence = new StringBuilder();
+        // Формируем предложение
+        int countOfWords = rnd.nextInt(maxCountOfWords);
+        int counterWords = 0;
+        boolean firstUpperCase;
+        while (counterWords < countOfWords) {
+            // Добавить в предложение
+            firstUpperCase = sentence.length() == 0;
+            sentence.append(getWord(maxLengthOfWord, firstUpperCase) + separator); /* TODO: (.|!|?) */
+            counterWords++;
+        }
+        if (sentence.length() != 0) {
+            sentence.append(sentence.insert(sentence.length() - 1, endOfSentence[rnd.nextInt(endOfSentence.length - 1)]));
+        }
+        return sentence.toString();
+    }
+
+    private String getParagraph() {
+        // Формируем абзац
+        StringBuilder paragraph = new StringBuilder();
+        int counterSentences = 0;
+        int countOfSentences = rnd.nextInt(maxLengthOfParagraph);
+        while (counterSentences < countOfSentences) {
+            paragraph.append(getSentence() + " ");
+            counterSentences++;
+        }
+        paragraph.append("\n");
+        return paragraph.toString();
+    }
+
 //    private String textGenerator(String[] words, int size) {
-    public String textGenerator() {
-        final char separator = ' ';
-        final char[] endOfSentence = {'.','!','?'};
-        final int maxLengthOfWord = 15;
-        final int maxCountOfWords = 15;
-        final int maxLengthOfParagraph = 20;
+    public String textGenerator(int countOfParagraph) {
 
-        int lengthOfWord;       // длина слова
-        int countOfWords;       // кол-во слов в предложении
-        int countOfSentences;   // кол-во предложений в абзаце
-
-        Random rnd = new Random();
+//        int lengthOfWord;       // длина слова
+//        int countOfWords;       // кол-во слов в предложении
+//        int countOfSentences;   // кол-во предложений в абзаце
 
         // Формируем текст
         StringBuilder text = new StringBuilder();
-        int countOfParagraphs = 3;
+//        int countOfParagraphs = 3;
         int counterParagraph = 0;
-        // Формируем абзац
-        while (counterParagraph < countOfParagraphs) {
-            StringBuilder paragraph = new StringBuilder();
-            int counterSentences = 0;
-            countOfSentences = rnd.nextInt(maxLengthOfParagraph);
-            while (counterSentences < countOfSentences) {
 
-                // Формируем предложение
-                StringBuilder sentence = new StringBuilder();
-                countOfWords = rnd.nextInt(maxCountOfWords);
-                int counterWords = 0;
-
-                while (counterWords < countOfWords) {
-
-                    lengthOfWord = rnd.nextInt((maxLengthOfWord - 2) + 1);
-                    StringBuilder word = new StringBuilder();
-
-                    // Формируем слово
-                    while (word.length() < lengthOfWord) {
-                        int i = rnd.nextInt(CharacterTables.latinLowerCaseCharArray.length - 1);
-                        if (sentence.length() == 0 & word.length() == 0) {
-                            word.append(CharacterTables.latinUpperCaseCharArray[i]);
-                        } else {
-                            word.append(CharacterTables.latinLowerCaseCharArray[i]);
-                        }
-                    }
-
-                    // Добавить в предложение
-                    sentence.append(word.append(separator)); /* TODO: (.|!|?) */
-                    counterWords++;
-                }
-//                int ind = sentence.length() - 2;
-                if (sentence.length() == 0) continue;
-                //sentence.insert(2, '!');
-                sentence.insert(sentence.length()-1, endOfSentence[rnd.nextInt(endOfSentence.length-1)]);
-                        // endOfSentence[rnd.nextInt(endOfSentence.length-1)]);
-                paragraph.append(sentence);
-                counterSentences++;
-            }
+        while (counterParagraph < countOfParagraph) {
+            text.append(getParagraph());
             counterParagraph++;
-            paragraph.append("\n");
-            text.append(paragraph);
         }
-
         return text.toString();
     }
 

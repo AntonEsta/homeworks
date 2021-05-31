@@ -11,7 +11,7 @@ public class TestProg {
 
         TextFileGenerator tfg = new TextFileGenerator();
 
-        System.out.println(tfg.textGenerator());
+        System.out.println(tfg.textGenerator(3));
 
     }
 }
