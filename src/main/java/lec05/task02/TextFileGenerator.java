@@ -1,86 +1,97 @@
 package lec05.task02;
 
 import lec05.task01.CharacterTables;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Locale;
 import java.util.Random;
 
+
+/*
+*  Класс - генератор текстовых файлов
+* */
+@Builder
+@RequiredArgsConstructor
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class TextFileGenerator {
 
-    final char separator = ' ';
-    final char[] endOfSentence = {'.','!','?'};
-    final int maxLengthOfWord = 15;
-    final int maxCountOfWords = 15;
-    final int maxLengthOfParagraph = 20;
+    final String separator;
+    final char[] endOfSentence;
+    final int maxLengthOfWord;
+    final int maxCountOfWords;
+    final int maxLengthOfParagraph;
 
-    Random rnd = new Random();
+    final Random rnd = new Random();
 
-    private String getWord(int maxLengthOfWord, boolean firstUpperCase) {
-//        StringBuilder buffer = new StringBuilder();
-        int lengthOfWord = rnd.nextInt(maxLengthOfWord);
+   /* public TextFileGenerator() {
+        separator = " ";
+        endOfSentence = new char[]{'.','!','?'};
+        maxLengthOfWord = 15;
+        maxCountOfWords = 15;
+        maxLengthOfParagraph = 20;
+    }*/
+
+    /*
+    * Генерация слова
+    * */
+    private String getWord() {
+        int lengthOfWord = rnd.nextInt(maxLengthOfWord - 1) + 1;
         StringBuilder word = new StringBuilder();
-        // Формируем слово
         while (word.length() < lengthOfWord) {
-            int i = rnd.nextInt((CharacterTables.latinLowerCaseCharArray.length - 2) + 1);
-            if (i == 0) System.out.println("!!! zero !!!");
-            if (firstUpperCase) {
-                word.append(CharacterTables.latinUpperCaseCharArray[i]);
-                firstUpperCase = false;
-            } else {
-                word.append(CharacterTables.latinLowerCaseCharArray[i]);
-            }
+            int i = rnd.nextInt(CharacterTables.latinLowerCaseCharArray.length - 1) + 1;
+            word.append(CharacterTables.latinLowerCaseCharArray[i]);
         }
         return word.toString();
     }
 
-
+    /*
+    *  Генерация предложения
+    * */
     private String getSentence() {
         StringBuilder sentence = new StringBuilder();
-        // Формируем предложение
-        int countOfWords = rnd.nextInt(maxCountOfWords);
+        int countOfWords = rnd.nextInt(maxCountOfWords - 1) + 1;
         int counterWords = 0;
         boolean firstUpperCase;
         while (counterWords < countOfWords) {
-            // Добавить в предложение
-            firstUpperCase = sentence.length() == 0;
-            sentence.append(getWord(maxLengthOfWord, firstUpperCase) + separator); /* TODO: (.|!|?) */
+            String separator = (rnd.nextInt(30) != 20) ? this.separator : ", ";
+            sentence.append(getWord()).append(separator);
             counterWords++;
         }
-        if (sentence.length() != 0) {
-            sentence.append(sentence.insert(sentence.length() - 1, endOfSentence[rnd.nextInt(endOfSentence.length - 1)]));
-        }
+        sentence.replace(sentence.length() - 1, sentence.length(),
+                String.valueOf(endOfSentence[rnd.nextInt(endOfSentence.length - 1)]));
+        sentence.replace(0, 0, String.valueOf(sentence.charAt(0)).toUpperCase());
         return sentence.toString();
     }
 
+    /*
+     *  Генерация абзаца
+     * */
     private String getParagraph() {
-        // Формируем абзац
         StringBuilder paragraph = new StringBuilder();
         int counterSentences = 0;
-        int countOfSentences = rnd.nextInt(maxLengthOfParagraph);
+        int countOfSentences = rnd.nextInt(maxLengthOfParagraph -1 ) + 1;
         while (counterSentences < countOfSentences) {
-            paragraph.append(getSentence() + " ");
+            paragraph.append(getSentence()).append(" ");
             counterSentences++;
         }
-        paragraph.append("\n");
+        paragraph.replace(paragraph.length() - 1, paragraph.length(), "\n");
         return paragraph.toString();
     }
 
-//    private String textGenerator(String[] words, int size) {
-    public String textGenerator(int countOfParagraph) {
-
-//        int lengthOfWord;       // длина слова
-//        int countOfWords;       // кол-во слов в предложении
-//        int countOfSentences;   // кол-во предложений в абзаце
-
-        // Формируем текст
+    /*
+     *  Генерация текста
+     * */
+    public String getText(int countOfParagraph) {
         StringBuilder text = new StringBuilder();
-//        int countOfParagraphs = 3;
         int counterParagraph = 0;
-
         while (counterParagraph < countOfParagraph) {
             text.append(getParagraph());
             counterParagraph++;
@@ -88,25 +99,25 @@ public class TextFileGenerator {
         return text.toString();
     }
 
+
+    /*
+    *   Генерация файла
+    * */
     public void getFile(String path, int n, int size, String[] words) throws IOException {
-
-        Byte[] buffer = new Byte[n];
-
-
-        //while buffer.length
-
-       /* try {
-            Path filePath = Paths.get(path);
-            *//*Получить буфер для записи в файл по размеру *//*
-            // Files.write(filePath, Arrays.copyOfRange(words, s, n));
-
-            // Files.write(Paths.get(path), textGenerator(words, size).getBytes(StandardCharsets.UTF_8));
-            *//*TODO: Продолжить здесь!*//*
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
+        int counterFiles = 0;
+        int mark = 0;
+        Path filePath;
+        while (counterFiles < n) {
+            filePath = Paths.get(path + "/out" + (counterFiles + 1) + ".txt");
+            try (BufferedWriter bw = Files.newBufferedWriter(filePath)) {
+                while (Files.size(filePath) < size | mark < words.length) {
+                    if (mark == words.length) mark = 0;
+                    bw.write(words[mark++]);
+                    bw.newLine();
+                }
+            }
+            counterFiles++;
+        }
     }
 
 }
