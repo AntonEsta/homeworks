@@ -1,4 +1,4 @@
-package lec05.task01;
+package lec05.task01.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

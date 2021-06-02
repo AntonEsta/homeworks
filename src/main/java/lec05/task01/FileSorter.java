@@ -1,5 +1,7 @@
 package lec05.task01;
 
+import lec05.task01.data.CharacterTables;
+import lec05.task01.data.StatFinder;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 

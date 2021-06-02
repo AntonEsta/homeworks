@@ -1,6 +1,6 @@
 package lec05.task02;
 
-import lec05.task01.CharacterTables;
+import lec05.task01.data.CharacterTables;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Locale;
 import java.util.Random;
-
 
 /*
 *  Класс - генератор текстовых файлов
@@ -30,14 +28,6 @@ public class TextFileGenerator {
     final int maxLengthOfParagraph;
 
     final Random rnd = new Random();
-
-   /* public TextFileGenerator() {
-        separator = " ";
-        endOfSentence = new char[]{'.','!','?'};
-        maxLengthOfWord = 15;
-        maxCountOfWords = 15;
-        maxLengthOfParagraph = 20;
-    }*/
 
     /*
     * Генерация слова
