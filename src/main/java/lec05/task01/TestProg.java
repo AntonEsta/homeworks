@@ -10,20 +10,23 @@ public class TestProg {
         final String inputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/input-skazka-o-care-saltane.txt";
         final String outputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/output-skazka-o-care-saltane.txt";
 
+        IoSort iosort = new IoSort();
+        NioSort niosort = new NioSort();
+
         try {
-            System.out.println(FileSorter.ioSort(inputLorem, outputLorem));
+            System.out.println(iosort.sort(inputLorem, outputLorem));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            System.out.println(FileSorter.ioSort(inputSkazka, outputSkazka));
+            System.out.println(iosort.sort(inputSkazka, outputSkazka));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         try {
-            System.out.println(FileSorter.nioSort(inputSkazka, outputSkazka));
+            System.out.println(niosort.sort(inputSkazka, outputSkazka));
         } catch (IOException e) {
             e.printStackTrace();
         }

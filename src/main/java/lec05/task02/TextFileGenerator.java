@@ -3,9 +3,9 @@ package lec05.task02;
 import lec05.task01.data.CharacterTables;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,6 +42,10 @@ public class TextFileGenerator {
         return word.toString();
     }
 
+    private String getSeparator() {
+        return (rnd.nextInt(30) != 20) ? this.separator : ", ";
+    }
+
     /*
     *  Генерация предложения
     * */
@@ -49,10 +53,9 @@ public class TextFileGenerator {
         StringBuilder sentence = new StringBuilder();
         int countOfWords = rnd.nextInt(maxCountOfWords - 1) + 1;
         int counterWords = 0;
-        boolean firstUpperCase;
         while (counterWords < countOfWords) {
-            String separator = (rnd.nextInt(30) != 20) ? this.separator : ", ";
-            sentence.append(getWord()).append(separator);
+            sentence.append(getWord());
+            sentence.append(getSeparator());
             counterWords++;
         }
         sentence.replace(sentence.length() - 1, sentence.length(),
@@ -69,7 +72,8 @@ public class TextFileGenerator {
         int counterSentences = 0;
         int countOfSentences = rnd.nextInt(maxLengthOfParagraph -1 ) + 1;
         while (counterSentences < countOfSentences) {
-            paragraph.append(getSentence()).append(" ");
+            paragraph.append(getSentence());
+            paragraph.append(" ");
             counterSentences++;
         }
         paragraph.replace(paragraph.length() - 1, paragraph.length(), "\n");
@@ -89,23 +93,33 @@ public class TextFileGenerator {
         return text.toString();
     }
 
+    private int writeStringsToFile(Path path, int fileSize, String[] words, int marker) throws IOException {
+
+        if (marker < 0 || marker >= words.length) throw new ArrayIndexOutOfBoundsException();
+
+        try (BufferedWriter bw = Files.newBufferedWriter(path)) {
+            while (Files.size(path) < fileSize) {
+                if (marker == words.length) marker = 0;
+                bw.write(words[marker++]);
+                bw.newLine();
+            }
+        }
+
+        return marker;
+    }
 
     /*
     *   Генерация файла
     * */
-    public void getFile(String path, int n, int size, String[] words) throws IOException {
+    public void getFile(@NonNull String path, int n, int size, String[] words) throws IOException {
         int counterFiles = 0;
         int mark = 0;
-        Path filePath;
+        String fileExtension = ".txt";
+        String subdir = "/out";
+        Path pPath;
         while (counterFiles < n) {
-            filePath = Paths.get(path + "/out" + (counterFiles + 1) + ".txt");
-            try (BufferedWriter bw = Files.newBufferedWriter(filePath)) {
-                while (Files.size(filePath) < size | mark < words.length) {
-                    if (mark == words.length) mark = 0;
-                    bw.write(words[mark++]);
-                    bw.newLine();
-                }
-            }
+            pPath = Paths.get(path, subdir, String.valueOf(counterFiles + 1), fileExtension);
+            mark = writeStringsToFile(pPath, size, words, mark);
             counterFiles++;
         }
     }
