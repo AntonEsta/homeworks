@@ -1,18 +1,27 @@
 package lec05.task02;
 
+import lec05.task01.data.CharacterTables;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Random;
 
 /*
-*  Класс - генератор текстовых файлов
-* */
-public class TextFileGenerator {
+ *  Класс - генератор текстовых файлов
+ * */
+@Builder
+@RequiredArgsConstructor
+@FieldDefaults(level= AccessLevel.PRIVATE)
+public class TextGenerator {
 
-    /*final String separator;
+    final String separator;
     final char[] endOfSentence;
     final int maxLengthOfWord;
     final int maxCountOfWords;
@@ -20,14 +29,25 @@ public class TextFileGenerator {
 
     final Random rnd = new Random();
 
-    *//*
-    * Генерация слова
-    * *//*
+
+    private int getSomeLetter() {
+        return rnd.nextInt(CharacterTables.latinLowerCaseCharArray.length - 1) + 1;
+    }
+
+    private String getSomeEnding() {
+        int ch = rnd.nextInt(endOfSentence.length - 1);
+        ch = endOfSentence[ch];
+        return String.valueOf(ch);
+    }
+
+    /*
+     * Генерация слова
+     * */
     private String getWord() {
         int lengthOfWord = rnd.nextInt(maxLengthOfWord - 1) + 1;
         StringBuilder word = new StringBuilder();
         while (word.length() < lengthOfWord) {
-            int i = rnd.nextInt(CharacterTables.latinLowerCaseCharArray.length - 1) + 1;
+            int i = getSomeLetter();
             word.append(CharacterTables.latinLowerCaseCharArray[i]);
         }
         return word.toString();
@@ -37,9 +57,9 @@ public class TextFileGenerator {
         return (rnd.nextInt(30) != 20) ? this.separator : ", ";
     }
 
-    *//*
-    *  Генерация предложения
-    * *//*
+    /*
+     *  Генерация предложения
+     * */
     private String getSentence() {
         StringBuilder sentence = new StringBuilder();
         int countOfWords = rnd.nextInt(maxCountOfWords - 1) + 1;
@@ -49,15 +69,14 @@ public class TextFileGenerator {
             sentence.append(getSeparator());
             counterWords++;
         }
-        sentence.replace(sentence.length() - 1, sentence.length(),
-                String.valueOf(endOfSentence[rnd.nextInt(endOfSentence.length - 1)]));
+        sentence.replace(sentence.length() - 1, sentence.length(), getSomeEnding());
         sentence.replace(0, 0, String.valueOf(sentence.charAt(0)).toUpperCase());
         return sentence.toString();
     }
 
-    *//*
+    /*
      *  Генерация абзаца
-     * *//*
+     * */
     private String getParagraph() {
         StringBuilder paragraph = new StringBuilder();
         int counterSentences = 0;
@@ -71,9 +90,9 @@ public class TextFileGenerator {
         return paragraph.toString();
     }
 
-    *//*
+    /*
      *  Генерация текста
-     * *//*
+     * */
     public String getText(int countOfParagraph) {
         StringBuilder text = new StringBuilder();
         int counterParagraph = 0;
@@ -82,37 +101,5 @@ public class TextFileGenerator {
             counterParagraph++;
         }
         return text.toString();
-    }*/
-
-    private int writeStringsToFile(Path path, int fileSize, String[] words, int marker) throws IOException {
-
-        if (marker < 0 || marker >= words.length) throw new ArrayIndexOutOfBoundsException();
-
-        try (BufferedWriter bw = Files.newBufferedWriter(path)) {
-            while (Files.size(path) < fileSize) {
-                bw.write(words[marker++]);
-                if (marker == words.length) marker = 0;
-                bw.newLine();
-            }
-        }
-
-        return marker;
     }
-
-    /*
-    *   Генерация файла
-    * */
-    public void getFile(@NonNull String path, int n, int size, String[] words) throws IOException {
-        int counterFiles = 0;
-        int mark = 0;
-        String fileExtension = ".txt";
-        String subdir = "/out";
-        Path pPath;
-        while (counterFiles < n) {
-            pPath = Paths.get(path, subdir +  String.valueOf(counterFiles + 1) + fileExtension);
-            mark = writeStringsToFile(pPath, size, words, mark);
-            counterFiles++;
-        }
-    }
-
 }
