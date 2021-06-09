@@ -95,7 +95,6 @@ public class TextFileGenerator {
                 bw.newLine();
             }
         }
-
         return marker;
     }
 

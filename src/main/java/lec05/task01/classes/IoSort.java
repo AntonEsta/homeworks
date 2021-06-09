@@ -10,13 +10,14 @@ import java.util.stream.Stream;
 //@UtilityClass
 public class IoSort implements FileSorter {
 
+    @Override
     public StatFinder sort(@NonNull String inputFileName, @NonNull String outputFileName) throws IOException {
 
         int foundWords = 0;
         HashSet<String> words;
 
-        WordFinder wordFinder = new WordFinder();
-        words = wordFinder.find(inputFileName);
+        FileWordsFinder fwf = new FileWordsFinder();
+        words = (HashSet<String>) fwf.findAll(inputFileName);
 
         foundWords = words.size();
 

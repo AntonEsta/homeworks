@@ -7,19 +7,13 @@ public class TestProg {
     public static void main(String[] args) {
 
         /* #1 */
-        TextGenerator tg = TextGenerator.builder()
-                                        .separator(" ")
-                                        .endOfSentence(new char[]{'.','!','?'})
-                                        .maxLengthOfWord(15)
-                                        .maxCountOfWords(15)
-                                        .maxLengthOfParagraph(20)
-                                        .build();
+        TextGenerator tg = new TextGenerator(3);
 
         int count = 0;
         int repeat = 100;
         while (count != repeat) {
             System.out.println("Text #" + (count + 1));
-            System.out.println(tg.getText(3));
+            System.out.println(tg.generate());
             count++;
         }
 
