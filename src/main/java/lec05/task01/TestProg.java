@@ -1,5 +1,8 @@
 package lec05.task01;
 
+import lec05.task01.classes.IoSort;
+import lec05.task01.classes.NioSort;
+
 import java.io.IOException;
 
 public class TestProg {
