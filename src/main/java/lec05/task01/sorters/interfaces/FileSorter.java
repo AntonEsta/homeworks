@@ -1,4 +1,4 @@
-package lec05.task01.interfaces;
+package lec05.task01.sorters.interfaces;
 
 import lec05.task01.data.StatFinder;
 import lombok.NonNull;
