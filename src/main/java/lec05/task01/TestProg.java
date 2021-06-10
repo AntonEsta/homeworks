@@ -19,10 +19,13 @@ public class TestProg {
 
         try {
             System.out.println("IoFileSorter Class...");
-            System.out.println("Lorem text: " + iosort.sort(inputLorem, outputLorem));
-            System.out.println("Skazka text: " + iosort.sort(inputSkazka, outputSkazka));
+            iosort.sort(inputLorem, outputLorem);
+//            System.out.println("Lorem text: " + iosort.sort(inputLorem, outputLorem));
+            iosort.sort(inputSkazka, outputSkazka;
+//            System.out.println("Skazka text: " + iosort.sort(inputSkazka, outputSkazka));
             System.out.println("NioFileSorter Class...");
-            System.out.println("Skazka text: " + niosort.sort(inputSkazka, outputSkazka));
+            niosort.sort(inputSkazka, outputSkazka);
+//            System.out.println("Skazka text: " + niosort.sort(inputSkazka, outputSkazka));
         } catch (IOException e) {
             e.printStackTrace();
         }

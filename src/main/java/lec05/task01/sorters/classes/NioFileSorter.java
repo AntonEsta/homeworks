@@ -33,12 +33,11 @@ public class NioFileSorter extends FileWriter implements FileSorter {
         }*//*
     }*/
 
-    public StatFinder sort(@NonNull String inputFileName, @NonNull String outputFileName) throws IOException {
+    public void sort(@NonNull String inputFileName, @NonNull String outputFileName) {
         HashSet<String> words;
         words = new HashSet<>(Finders.newFileWordsFinder().findAllUnique(inputFileName));
         int foundWords = words.size();
 //        words = new HashSet<>(words);
         writeFile(Files.newBufferedWriter(Paths.get(outputFileName)), words);
-        return new StatFinder(foundWords, words.size());
     }
 }

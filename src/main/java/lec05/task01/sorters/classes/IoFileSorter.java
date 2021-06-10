@@ -20,7 +20,7 @@ public class IoFileSorter implements FileSorter {
 
 //    FileWriter fw;
 
-    /*void writeFile(String outputFileName, String[] strings) throws IOException {
+    void writeFile(String outputFileName, String[] strings) throws IOException {
         try (FileWriter writer = new FileWriter(outputFileName);
              BufferedWriter bw = new BufferedWriter(writer)) {
             stream.forEach((s) -> {
@@ -33,17 +33,19 @@ public class IoFileSorter implements FileSorter {
             });
         }
     }
-*/
     @Override
-    public StatFinder sort(@NonNull String inputFileName, @NonNull String outputFileName) throws IOException {
+    public void sort(@NonNull String inputFileName, @NonNull String outputFileName) {
         HashSet<String> words;
         words = new HashSet<>(Finders.newFileWordsFinder().findAllUnique(inputFileName));
         /* TODO: int foundWords - фиксировать с повторениями или удалить функционал  */
-        int foundWords = words.size();
+//        int foundWords = words.size();
 //        words = new HashSet<>(words);
-        FileWriter writer = new FileWriter(outputFileName);
-        BufferedWriter bw = new BufferedWriter(writer);
-        fw.writeFile(bw, words);
-        return new StatFinder(foundWords, words.size());
+
+        /*FileWriter writer = new FileWriter(outputFileName);
+        BufferedWriter bw = new BufferedWriter(writer);*/
+
+        writeFile(outputFileName, words.toArray(new String[0]));
+
+        //        return new StatFinder(foundWords, words.size());
     }
 }

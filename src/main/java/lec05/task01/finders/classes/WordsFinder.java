@@ -1,31 +1,29 @@
 package lec05.task01.finders.classes;
 
-import lec05.task01.data.CharacterTables;
-import lec05.task01.finders.interfaces.TextFinder;
+import lec05.task01.finders.interfaces.Finder;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
-public class WordsFinder implements TextFinder {
+public class WordsFinder implements Finder<String> {
 
-    private void parse(String text, List<String> list) {
-        Pattern pattern = Pattern.compile("[a-zA-Z]+");
+    private void parse(String text, Collection<String> collection) {
+        Pattern pattern = Pattern.compile("[a-zA-Zа-яА-Я]+");
         Matcher matcher = pattern.matcher(text);
         while (matcher.find()) {
-            list.add(matcher.group().toLowerCase(Locale.ROOT));
+            collection.add(matcher.group().toLowerCase(Locale.ROOT));
         }
     }
 
-    @Override
+    /*@Override
     public List<String> findAll(String text) throws PatternSyntaxException, IllegalStateException {
         List<String> list = new LinkedList<>();
         parse(text, list);
         return list;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Set<String> findAllUnique(String text) {
         Set<String> set = new HashSet<>();
         Pattern pattern = Pattern.compile("[a-zA-Zа-яА-Я]+");
@@ -34,21 +32,31 @@ public class WordsFinder implements TextFinder {
             set.add(matcher.group().toLowerCase(Locale.ROOT));
         }
         return set;
-    }
+    }*/
 
 
     @Override
-    public String find() {
+    public String find(String text) {
         return null;
     }
 
     @Override
-    public String[] findAll() {
-        return new String[0];
+    public String[] findAll(String text) {
+        Collection<String> list = new LinkedList<>();
+        parse(text, list);
+        return list.toArray(new String[0]);
     }
 
     @Override
-    public Set<String> findAllUnique() {
-        return null;
+    public Set<String> findAllUnique(String text) {
+
+        Set<String> set = new HashSet<>();
+        /*Pattern pattern = Pattern.compile("[a-zA-Zа-яА-Я]+");
+        Matcher matcher = pattern.matcher(text);
+        while (matcher.find()) {
+            set.add(matcher.group().toLowerCase(Locale.ROOT));
+        }*/
+        parse(text, set);
+        return set;
     }
 }

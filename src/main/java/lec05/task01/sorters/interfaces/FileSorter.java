@@ -5,8 +5,8 @@ import lombok.NonNull;
 
 import java.io.IOException;
 
-public interface FileSorter {
+public interface FileSorter extends Sorter<String> {
 
-    StatFinder sort(@NonNull String inputFileName, @NonNull String outputFileName) throws IOException;
+    void sort(@NonNull String inputFileName, @NonNull String outputFileName);
 
 }
