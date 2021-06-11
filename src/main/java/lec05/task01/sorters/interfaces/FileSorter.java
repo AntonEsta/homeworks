@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public interface FileSorter extends Sorter<String> {
 
-    void sort(@NonNull String inputFileName, @NonNull String outputFileName);
+    void sort(@NonNull String inputFileName, @NonNull String outputFileName) throws IOException;
 
 }

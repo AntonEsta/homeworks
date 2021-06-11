@@ -1,51 +1,42 @@
 package lec05.task01.sorters.classes;
 
-import lec05.task01.data.StatFinder;
-import lec05.task01.finders.classes.Finders;
+import lec05.task01.finders.classes.utils.Finders;
 import lec05.task01.sorters.interfaces.FileSorter;
 
-import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.ToString;
-import lombok.experimental.FieldDefaults;
 
 import java.io.*;
 import java.util.*;
 
 @EqualsAndHashCode
 @ToString
-@FieldDefaults(level = AccessLevel.PRIVATE)
 public class IoFileSorter implements FileSorter {
 
-//    FileWriter fw;
+    private void writeFile(@NonNull String outputFileName, @NonNull String[] strings) throws NullPointerException, IOException {
+        if (strings == null) {
+            throw new NullPointerException("No data for writing! (String[] strings is null)");
+        }
 
-    void writeFile(String outputFileName, String[] strings) throws IOException {
         try (FileWriter writer = new FileWriter(outputFileName);
-             BufferedWriter bw = new BufferedWriter(writer)) {
-            stream.forEach((s) -> {
-                try {
-                    bw.write(s);
-                    bw.newLine();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+             Writer bw = new BufferedWriter(writer)) {
+            Arrays.stream(strings).forEach((s) -> {
+                        try {
+                            bw.append(s);
+                            bw.append('\n');
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+            );
         }
     }
+
     @Override
-    public void sort(@NonNull String inputFileName, @NonNull String outputFileName) {
+    public void sort(@NonNull String inputFileName, @NonNull String outputFileName) throws IOException {
         HashSet<String> words;
         words = new HashSet<>(Finders.newFileWordsFinder().findAllUnique(inputFileName));
-        /* TODO: int foundWords - фиксировать с повторениями или удалить функционал  */
-//        int foundWords = words.size();
-//        words = new HashSet<>(words);
-
-        /*FileWriter writer = new FileWriter(outputFileName);
-        BufferedWriter bw = new BufferedWriter(writer);*/
-
         writeFile(outputFileName, words.toArray(new String[0]));
-
-        //        return new StatFinder(foundWords, words.size());
     }
 }

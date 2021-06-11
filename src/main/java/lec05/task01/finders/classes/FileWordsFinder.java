@@ -1,5 +1,7 @@
 package lec05.task01.finders.classes;
 
+import lombok.NonNull;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -7,9 +9,7 @@ import java.util.Set;
 
 public class FileWordsFinder extends WordsFinder {
 
-    /* TODO: рассмотреть вариант с 'WordsFinder wordsFinder = new WordsFinder()' */
-
-    private String getTextFromFile(String fileName) {
+    private String getTextFromFile(@NonNull String fileName) throws IOException{
         StringBuilder sb = new StringBuilder();
         try (FileReader reader = new FileReader(fileName);
              BufferedReader br = new BufferedReader(reader)) {
@@ -17,19 +17,31 @@ public class FileWordsFinder extends WordsFinder {
             while ((ch = br.read()) != -1) {
                 sb.append(ch);
             }
-        } catch (IOException e) {
-            e.getStackTrace();
         }
         return sb.toString();
     }
 
     @Override
-    public String[] findAll(String fileName) {
-        return super.findAll(getTextFromFile(fileName));
+    public String[] findAll(@NonNull String fileName) {
+        String str = ""; /*TODO: избавиться от <try...catch exception>*/
+        try {
+            str = getTextFromFile(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return super.findAll(str);
+
     }
 
     @Override
-    public Set<String> findAllUnique(String fileName) {
-        return super.findAllUnique(getTextFromFile(fileName));
+    public Set<String> findAllUnique(@NonNull String fileName) {
+//        return super.findAllUnique(getTextFromFile(fileName));
+        String str = ""; /*TODO: избавиться от <try...catch exception>*/
+        try {
+            str = getTextFromFile(fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return super.findAllUnique(str);
     }
 }

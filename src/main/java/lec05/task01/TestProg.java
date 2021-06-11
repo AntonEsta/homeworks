@@ -1,6 +1,5 @@
 package lec05.task01;
 
-import lec05.task01.finders.classes.Finders;
 import lec05.task01.sorters.classes.IoFileSorter;
 import lec05.task01.sorters.classes.NioFileSorter;
 
@@ -21,7 +20,7 @@ public class TestProg {
             System.out.println("IoFileSorter Class...");
             iosort.sort(inputLorem, outputLorem);
 //            System.out.println("Lorem text: " + iosort.sort(inputLorem, outputLorem));
-            iosort.sort(inputSkazka, outputSkazka;
+            iosort.sort(inputSkazka, outputSkazka);
 //            System.out.println("Skazka text: " + iosort.sort(inputSkazka, outputSkazka));
             System.out.println("NioFileSorter Class...");
             niosort.sort(inputSkazka, outputSkazka);
