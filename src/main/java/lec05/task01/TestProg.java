@@ -16,18 +16,15 @@ public class TestProg {
         IoFileSorter iosort = new IoFileSorter();
         NioFileSorter niosort = new NioFileSorter();
 
-        try {
-            System.out.println("IoFileSorter Class...");
-            iosort.sort(inputLorem, outputLorem);
+        System.out.println("IoFileSorter Class...");
+//            NioFileSorter niosortort = new NioFileSorter();
+        iosort.sort(inputLorem, outputLorem);
 //            System.out.println("Lorem text: " + iosort.sort(inputLorem, outputLorem));
-            iosort.sort(inputSkazka, outputSkazka);
+        iosort.sort(inputSkazka, outputSkazka);
 //            System.out.println("Skazka text: " + iosort.sort(inputSkazka, outputSkazka));
-            System.out.println("NioFileSorter Class...");
-            niosort.sort(inputSkazka, outputSkazka);
+        System.out.println("NioFileSorter Class...");
+        niosort.sort(inputSkazka, outputSkazka);
 //            System.out.println("Skazka text: " + niosort.sort(inputSkazka, outputSkazka));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 }

@@ -1,9 +1,9 @@
 package lec05.task02.interfaces;
 
-import java.util.RandomAccess;
-
+/**
+ * Interface of generator class.
+ * @param <T>
+ */
 public interface Generator<T> {
-
     T generate();
-
 }

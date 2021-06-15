@@ -2,25 +2,40 @@ package lec05.task02;
 
 import lec05.task02.interfaces.Generator;
 import lec05.task02.text.Paragraph;
-
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.FieldDefaults;
 import java.util.Random;
 
+@RequiredArgsConstructor
+@EqualsAndHashCode
+@ToString
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class ParagraphGenerator implements Generator<Paragraph> {
 
-    private final int maxLengthOfParagraph = 20;
+    final int maxLengthOfParagraph;
+    final Random rnd = new Random();
 
-    private Random rnd = new Random();
+    public ParagraphGenerator() {
+        this.maxLengthOfParagraph = 20;
+    }
 
     @Override
     public Paragraph generate() {
         Paragraph paragraph = new Paragraph();
-        int counterSentences = 0;
+        SentenceGenerator sg = new SentenceGenerator();
         int countOfSentences = rnd.nextInt(maxLengthOfParagraph -1 ) + 1;
-        while (counterSentences < countOfSentences) {
-            paragraph.append(new SentenceGenerator().generate());
-            counterSentences++;
+        while (paragraph.size() < countOfSentences) {
+            paragraph.append(sg.generate());
         }
-//        paragraph.replace(paragraph.length() - 1, paragraph.length(), "\n");
         return paragraph;
+    }
+
+    /*TODO: delete*/
+    public static void main(String[] args) {
+        ParagraphGenerator pg = new ParagraphGenerator();
+        System.out.println(pg.generate());
     }
 }

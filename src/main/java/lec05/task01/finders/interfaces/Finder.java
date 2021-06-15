@@ -1,12 +1,9 @@
 package lec05.task01.finders.interfaces;
 
-import java.util.Set;
-
+/**
+ * The class defines the behavior of the search class.
+ * @param <T> returnable type
+ */
 public interface Finder<T> {
-
-    // Finds and returns all
-    T[] findAll(T text);
-
-    // Returns set
-    Set<T> findAllUnique(T text);
+    T find();
 }

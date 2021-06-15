@@ -1,24 +1,30 @@
 package lec05.task02;
 
-import lec05.task01.data.CharacterTables;
 import lec05.task02.interfaces.Generator;
 import lombok.AccessLevel;
-import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Random;
 
 @RequiredArgsConstructor
+@Getter
 @FieldDefaults(level= AccessLevel.PRIVATE)
 public class WordGenerator implements Generator<String> {
 
-    final int maxLengthOfWord = 15;
+    final int maxLengthOfWord;
+    final Random rnd = new Random();
 
-    private Random rnd = new Random();
+    public WordGenerator() {
+        this.maxLengthOfWord = 15;
+    }
 
-    private int getSomeLetter() {
-        return rnd.nextInt(CharacterTables.latinLowerCaseCharArray.length - 1) + 1;
+    private char getSomeLetter() {
+        char[]latinLowerCaseCharArray= {'a','b','c','d','e','f','g','h','i','j','k','l','m',
+                                        'n','o','p','q','r','s','t','u','v','w','x','y','z'};
+        int i = rnd.nextInt(latinLowerCaseCharArray.length - 1) + 1;
+        return latinLowerCaseCharArray[i];
     }
 
     @Override
@@ -26,8 +32,7 @@ public class WordGenerator implements Generator<String> {
         int lengthOfWord = rnd.nextInt(maxLengthOfWord - 1) + 1;
         StringBuilder word = new StringBuilder();
         while (word.length() < lengthOfWord) {
-            int i = getSomeLetter();
-            word.append(CharacterTables.latinLowerCaseCharArray[i]);
+            word.append(getSomeLetter());
         }
         return word.toString();
     }

@@ -1,21 +1,18 @@
 package lec05.task02;
 
-import lec05.task01.data.CharacterTables;
 import lec05.task02.interfaces.Generator;
 import lec05.task02.text.Text;
 
 import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import java.util.Random;
 
 /*
  *  Класс - генератор текстовых файлов
  * */
-@Builder
-@RequiredArgsConstructor
-@FieldDefaults(level= AccessLevel.PRIVATE)
+@Getter
+@FieldDefaults(level=AccessLevel.PRIVATE)
 public class TextGenerator implements Generator<Text> {
 
 //    final String separator;
@@ -104,4 +101,10 @@ public class TextGenerator implements Generator<Text> {
         }
         return text;
     }
+
+    public static void main(String[] args) {
+        TextGenerator tg = new TextGenerator();
+        System.out.println(tg .generate());
+    }
+
 }

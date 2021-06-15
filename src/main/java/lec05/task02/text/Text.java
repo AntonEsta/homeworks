@@ -1,5 +1,7 @@
 package lec05.task02.text;
 
+import lec05.task02.ParagraphGenerator;
+import lec05.task02.SentenceGenerator;
 import lombok.Data;
 
 import java.util.LinkedList;
@@ -22,4 +24,16 @@ public class Text {
         paragraphs.forEach(sb::append);
         return sb.toString();
     }
+
+    public static void main(String[] args) {
+        Text text = new Text();
+        ParagraphGenerator pg = new ParagraphGenerator();
+//        Paragraph p = new Paragraph();
+        text.append(pg.generate());
+        text.append(pg.generate());
+        text.append(pg.generate());
+//        text.append(p);
+        System.out.println(text);
+    }
+
 }

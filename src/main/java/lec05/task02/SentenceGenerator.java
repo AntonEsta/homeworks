@@ -13,11 +13,11 @@ import java.util.Random;
 @FieldDefaults(level= AccessLevel.PRIVATE)
 public class SentenceGenerator implements Generator<Sentence> {
 
-    private final String separator;
-    private final int maxCountOfWords;
-    private final char[] endOfSentence;
+    final String separator;
+    final int maxCountOfWords;
+    final char[] endOfSentence;
 
-    Random rnd = new Random();
+    final Random rnd = new Random();
 
     public SentenceGenerator() {
         this.separator = " ";
@@ -25,14 +25,14 @@ public class SentenceGenerator implements Generator<Sentence> {
         this.endOfSentence = new char[]{'.', '!', '?'};
     }
 
-    private String getSeparator() {
-        return (rnd.nextInt(30) != 20) ? this.separator : ", ";
+    private boolean needComma() {
+        return (rnd.nextInt(30) == 20);
     }
 
     private String getSomeEnding() {
         int ch = rnd.nextInt(endOfSentence.length - 1);
         ch = endOfSentence[ch];
-        return String.valueOf(ch);
+        return String.valueOf((char) ch);
     }
 
     /*
@@ -41,17 +41,20 @@ public class SentenceGenerator implements Generator<Sentence> {
     @Override
     public Sentence generate() {
         Sentence sentence = new Sentence();
-        StringBuilder sb = new StringBuilder();
         int countOfWords = rnd.nextInt(maxCountOfWords - 1) + 1;
-        int counterWords = 0;
-        while (counterWords < countOfWords) {
-            sb.append(new WordGenerator().generate());
-            sb.append(getSeparator());
-            counterWords++;
+        while (sentence.size() < countOfWords) {
+            sentence.append(new WordGenerator().generate());
+            if (needComma()) { sentence.append(","); }
         }
-        sb.replace(sb.length(), sb.length(), getSomeEnding());
-        sb.replace(0, 0, String.valueOf(sb.charAt(0)).toUpperCase());
-        sentence.append(sb.toString());
+        sentence.append(getSomeEnding());
+        sentence.replace(0, 0, 0, String.valueOf(sentence.get(0).charAt(0)).toUpperCase());
         return sentence;
+    }
+
+    /*TODO: delete*/
+    public static void main(String[] args) {
+        SentenceGenerator sg = new SentenceGenerator();
+        Sentence s = sg.generate();
+        System.out.println(s);
     }
 }
