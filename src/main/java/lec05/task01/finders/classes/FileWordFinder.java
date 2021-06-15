@@ -44,31 +44,7 @@ public class FileWordFinder implements Finder<String> {
         return finder.findAll();
     }
 
-//    @Override
-//    public LinkedList<String> findAll(@NonNull String fileName) throws IOException {
-//        String str = ""; /*TODO: избавиться от <try...catch exception>*/
-////        try {
-//            str = getTextFromFile(fileName);
-//            return super.findAll();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-//    @Override
-//    public Set<String> findAllUnique(@NonNull String fileName) {
-////        return super.findAllUnique(getTextFromFile(fileName));
-//        String str = ""; TODO: избавиться от <try...catch exception>
-//        try {
-//            str = getTextFromFile(fileName);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return super.findAllUnique(str);
-//    }
-
-    /*TODO: to be deleted*/
+    /*TODO: The method below is to be removed.*/
     public static void main(String[] args) {
         final String inputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/input-skazka-o-care-saltane.txt";
         FileWordFinder fwf = new FileWordFinder(inputSkazka);

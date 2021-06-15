@@ -52,7 +52,7 @@ public class WordFinder implements Finder<String> {
         return matcher.group();
     }
 
-    /*TODO: delete*/
+    /*TODO: The method below is to be removed.*/
     public static void main(String[] args) {
         WordFinder wf = new WordFinder("Hello World!!!");
         System.out.println("One: " + wf.find());

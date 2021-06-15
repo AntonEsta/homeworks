@@ -1,6 +1,6 @@
-package lec05.task02;
+package lec05.task02.generators;
 
-import lec05.task02.interfaces.Generator;
+import lec05.task02.generators.interfaces.Generator;
 import lec05.task02.text.Paragraph;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -22,6 +22,10 @@ public class ParagraphGenerator implements Generator<Paragraph> {
         this.maxLengthOfParagraph = 20;
     }
 
+    /**
+     * Генерирует параграф текста
+     * @return сгенерированный параграф текста типа {@link Paragraph}
+     */
     @Override
     public Paragraph generate() {
         Paragraph paragraph = new Paragraph();
@@ -33,7 +37,7 @@ public class ParagraphGenerator implements Generator<Paragraph> {
         return paragraph;
     }
 
-    /*TODO: delete*/
+    /*TODO: The method below is to be removed.*/
     public static void main(String[] args) {
         ParagraphGenerator pg = new ParagraphGenerator();
         System.out.println(pg.generate());

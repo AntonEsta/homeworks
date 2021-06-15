@@ -1,4 +1,4 @@
-package lec05.task02.interfaces;
+package lec05.task02.generators.interfaces;
 
 /**
  * Interface of generator class.

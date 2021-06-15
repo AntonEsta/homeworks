@@ -1,6 +1,9 @@
 package lec05.task02;
 
 
+import lec05.task02.generators.TextFileGenerator;
+import lec05.task02.generators.TextGenerator;
+
 import java.io.IOException;
 
 public class TestProg {

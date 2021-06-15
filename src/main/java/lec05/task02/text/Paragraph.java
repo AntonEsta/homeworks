@@ -1,24 +1,21 @@
 package lec05.task02.text;
 
-import lec05.task02.ParagraphGenerator;
+import lec05.task02.generators.ParagraphGenerator;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldDefaults;
 import java.util.LinkedList;
 import java.util.Objects;
 
-/**
- * Class paragraph generator.
- */
 @EqualsAndHashCode
 @FieldDefaults(level= AccessLevel.PRIVATE)
 public class Paragraph{
 
     final LinkedList<Sentence> sentences = new LinkedList<>();
 
-    public Paragraph append(Sentence sent) {
-        Objects.requireNonNull(sent);
-        sentences.add(sent);
+    public Paragraph append(Sentence sentence) {
+        Objects.requireNonNull(sentence);
+        sentences.add(sentence);
         return this;
     }
 
@@ -37,11 +34,10 @@ public class Paragraph{
         return sb.toString();
     }
 
-    /*TODO: delete*/
+    /*TODO: The method below is to be removed.*/
     public static void main(String[] args) {
         ParagraphGenerator pg = new ParagraphGenerator();
         Paragraph p = pg.generate();
         System.out.println(p);
     }
-
 }

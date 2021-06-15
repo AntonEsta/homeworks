@@ -43,7 +43,7 @@ public final class IoFileSorter implements FileSorter {
         }
     }
 
-    /*TODO: delete*/
+    /*TODO: The method below is to be removed.*/
     public static void main(String[] args) {
         final String inputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/input-skazka-o-care-saltane.txt";
         final String outputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/output-skazka-o-care-saltane.txt";

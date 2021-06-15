@@ -1,25 +1,29 @@
 package lec05.task02.text;
 
-import lombok.Data;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
+import lombok.experimental.FieldDefaults;
 
 import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
-@Data
+@EqualsAndHashCode
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class Sentence {
 
-    private LinkedList<String> words = new LinkedList<>();
+    final LinkedList<String> words = new LinkedList<>();
 
     public boolean append(@NonNull String str) {
         return words.add(str);
     }
 
     public int size() {
-        Stream<String> stream = words.stream().filter(this::isWord);
-        return ((int) stream.count());
+        long filteredSize = words.stream()
+                .filter(Sentence::isWord)
+                .count();
+        return (int) filteredSize;
     }
 
     public String set(int index, String word) {
@@ -36,17 +40,7 @@ public class Sentence {
         return set(index, sb.toString());
     }
 
-    /*TODO: delete*/
-/*    public boolean insert(int index, String str) {
-        try {
-            words.add(index, str);
-        } catch (RuntimeException e) {
-            return false;
-        }
-        return true;
-    }*/
-
-    private boolean isWord(String str) {
+    private static boolean isWord(String str) {
         Matcher matcher = Pattern.compile("[A-Za-zА-Яа-я]+").matcher(str);
         return matcher.find();
     }
@@ -62,5 +56,16 @@ public class Sentence {
             }
         }
         return sb.toString();
+    }
+
+    /*TODO: The method below is to be removed.*/
+    public static void main(String[] args) {
+        Sentence s = new Sentence();
+        s.append("sdfvasevr");
+        s.append("sdfgrferf");
+        s.append(",");
+        s.append("sdf");
+        s.append("!");
+        System.out.println(s.size());
     }
 }

@@ -1,6 +1,6 @@
-package lec05.task02;
+package lec05.task02.generators;
 
-import lec05.task02.interfaces.Generator;
+import lec05.task02.generators.interfaces.Generator;
 import lec05.task02.text.Sentence;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -35,9 +35,10 @@ public class SentenceGenerator implements Generator<Sentence> {
         return String.valueOf((char) ch);
     }
 
-    /*
-     *  Генерация предложения
-     * */
+    /**
+     * Генерация предложения
+     * @return сгенерированное предложение типа {@link Sentence}
+     */
     @Override
     public Sentence generate() {
         Sentence sentence = new Sentence();
@@ -51,7 +52,7 @@ public class SentenceGenerator implements Generator<Sentence> {
         return sentence;
     }
 
-    /*TODO: delete*/
+    /*TODO: The method below is to be removed.*/
     public static void main(String[] args) {
         SentenceGenerator sg = new SentenceGenerator();
         Sentence s = sg.generate();

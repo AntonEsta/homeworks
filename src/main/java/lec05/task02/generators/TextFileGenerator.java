@@ -1,4 +1,4 @@
-package lec05.task02;
+package lec05.task02.generators;
 
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -25,15 +25,19 @@ public class TextFileGenerator {
             while (Files.size(path) < fileSize) {
                 bw.write(words[marker++]);
                 if (marker == words.length) marker = 0;
-                //bw.newLine();
             }
         }
         return marker;
     }
 
-    /*
-    *   Генерация файла
-    * */
+    /**
+     * Генерация файла
+     *
+     * @param path путь к входному файлу
+     * @param n количество выходных файлов
+     * @param size размер каждого выходного файла
+     * @param words массив строк {@link String} для выгрузки в файл
+     */
     public void getFile(@NonNull String path, int n, int size, String[] words) throws IOException {
         int counterFiles = 0;
         int mark = 0;
@@ -47,4 +51,10 @@ public class TextFileGenerator {
         }
     }
 
+    /*TODO: The method below is to be removed.*/
+    public static void main(String[] args) throws IOException {
+        String path = "/home/esta/IdeaProjects/homeworks/src/main/resources";
+        TextFileGenerator tfg = new TextFileGenerator();
+        tfg.getFile(path, 3, 10000, new String[]{"Hello","World","!"});
+    }
 }

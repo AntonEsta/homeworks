@@ -1,6 +1,6 @@
-package lec05.task02;
+package lec05.task02.generators;
 
-import lec05.task02.interfaces.Generator;
+import lec05.task02.generators.interfaces.Generator;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,10 @@ public class WordGenerator implements Generator<String> {
         this.maxLengthOfWord = 15;
     }
 
+    /**
+     * Получить случайную букву
+     * @return символ типа {@code char}
+     */
     private char getSomeLetter() {
         char[]latinLowerCaseCharArray= {'a','b','c','d','e','f','g','h','i','j','k','l','m',
                                         'n','o','p','q','r','s','t','u','v','w','x','y','z'};
@@ -27,6 +31,10 @@ public class WordGenerator implements Generator<String> {
         return latinLowerCaseCharArray[i];
     }
 
+    /**
+     * Генерация слова
+     * @return последовательность типа {@link String}
+     */
     @Override
     public String generate() {
         int lengthOfWord = rnd.nextInt(maxLengthOfWord - 1) + 1;
@@ -35,5 +43,11 @@ public class WordGenerator implements Generator<String> {
             word.append(getSomeLetter());
         }
         return word.toString();
+    }
+
+    /*TODO: The method below is to be removed.*/
+    public static void main(String[] args) {
+        WordGenerator wg = new WordGenerator();
+        System.out.println(wg.generate());
     }
 }
