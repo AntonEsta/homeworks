@@ -51,11 +51,4 @@ public class SentenceGenerator implements Generator<Sentence> {
         sentence.replace(0, 0, 0, String.valueOf(sentence.get(0).charAt(0)).toUpperCase());
         return sentence;
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        SentenceGenerator sg = new SentenceGenerator();
-        Sentence s = sg.generate();
-        System.out.println(s);
-    }
 }

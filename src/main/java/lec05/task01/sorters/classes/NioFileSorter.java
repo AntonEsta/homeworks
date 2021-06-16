@@ -13,7 +13,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @ToString
 public final class NioFileSorter implements FileSorter {
@@ -44,13 +43,5 @@ public final class NioFileSorter implements FileSorter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        final String inputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/input-skazka-o-care-saltane.txt";
-        final String outputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/output-skazka-o-care-saltane.txt";
-        NioFileSorter sorter = new NioFileSorter();
-        sorter.sort(inputSkazka, outputSkazka);
     }
 }

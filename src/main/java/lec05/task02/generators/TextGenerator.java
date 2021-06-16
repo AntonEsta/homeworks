@@ -36,11 +36,4 @@ public class TextGenerator implements Generator<Text> {
         }
         return text;
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        TextGenerator tg = new TextGenerator();
-        System.out.println(tg .generate());
-    }
-
 }

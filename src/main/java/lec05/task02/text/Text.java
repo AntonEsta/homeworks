@@ -25,15 +25,4 @@ public class Text {
         paragraphs.forEach(sb::append);
         return sb.toString();
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        Text text = new Text();
-        ParagraphGenerator pg = new ParagraphGenerator();
-        text.append(pg.generate());
-        text.append(pg.generate());
-        text.append(pg.generate());
-        System.out.println(text);
-    }
-
 }

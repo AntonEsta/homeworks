@@ -57,15 +57,4 @@ public class Sentence {
         }
         return sb.toString();
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        Sentence s = new Sentence();
-        s.append("sdfvasevr");
-        s.append("sdfgrferf");
-        s.append(",");
-        s.append("sdf");
-        s.append("!");
-        System.out.println(s.size());
-    }
 }

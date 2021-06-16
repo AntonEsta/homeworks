@@ -44,10 +44,4 @@ public class WordGenerator implements Generator<String> {
         }
         return word.toString();
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        WordGenerator wg = new WordGenerator();
-        System.out.println(wg.generate());
-    }
 }

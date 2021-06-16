@@ -43,12 +43,4 @@ public class FileWordFinder implements Finder<String> {
     public Stream<String> findAll() {
         return finder.findAll();
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        final String inputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/input-skazka-o-care-saltane.txt";
-        FileWordFinder fwf = new FileWordFinder(inputSkazka);
-        System.out.println(fwf.findAll());
-    }
-
 }

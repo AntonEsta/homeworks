@@ -36,10 +36,4 @@ public class ParagraphGenerator implements Generator<Paragraph> {
         }
         return paragraph;
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        ParagraphGenerator pg = new ParagraphGenerator();
-        System.out.println(pg.generate());
-    }
 }

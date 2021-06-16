@@ -24,8 +24,6 @@ public class TestProg {
 
         /* #2 */
         String path = "/home/esta/IdeaProjects/homeworks/src/main/resources";
-//        String str = "Hello World! Hello World! Hello World! Hello World!";
-
         TextFileGenerator tfg = new TextFileGenerator();
 
         try {

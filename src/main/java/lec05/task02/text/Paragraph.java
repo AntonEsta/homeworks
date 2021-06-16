@@ -33,11 +33,4 @@ public class Paragraph{
         sb.replace(sb.length(), sb.length(), "\n");
         return sb.toString();
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        ParagraphGenerator pg = new ParagraphGenerator();
-        Paragraph p = pg.generate();
-        System.out.println(p);
-    }
 }

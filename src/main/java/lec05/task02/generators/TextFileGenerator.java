@@ -50,11 +50,4 @@ public class TextFileGenerator {
             counterFiles++;
         }
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) throws IOException {
-        String path = "/home/esta/IdeaProjects/homeworks/src/main/resources";
-        TextFileGenerator tfg = new TextFileGenerator();
-        tfg.getFile(path, 3, 10000, new String[]{"Hello","World","!"});
-    }
 }

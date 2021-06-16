@@ -51,25 +51,4 @@ public class WordFinder implements Finder<String> {
         if (!matcher.find()) return null;
         return matcher.group();
     }
-
-    /*TODO: The method below is to be removed.*/
-    public static void main(String[] args) {
-        WordFinder wf = new WordFinder("Hello World!!!");
-        System.out.println("One: " + wf.find());
-        System.out.println("All: ");
-        wf.reset();
-        String str;
-        while ((str = wf.next()) != null) {
-            System.out.println(str);
-        }
-        wf = new WordFinder("Helloooo Worldddd!!!");
-        System.out.println("second");
-        while ((str = wf.next()) != null) {
-            System.out.println(str);
-        }
-
-        System.out.println(wf.findAll());
-
-    }
-
 }
