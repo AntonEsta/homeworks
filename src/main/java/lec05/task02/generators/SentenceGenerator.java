@@ -36,8 +36,8 @@ public class SentenceGenerator implements Generator<Sentence> {
     }
 
     /**
-     * Генерация предложения
-     * @return сгенерированное предложение типа {@link Sentence}
+     * Generates a sentence
+     * @return Generated sentence by type {@link Sentence}
      */
     @Override
     public Sentence generate() {

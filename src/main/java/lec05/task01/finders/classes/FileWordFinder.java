@@ -9,9 +9,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 
 @EqualsAndHashCode
@@ -35,12 +35,13 @@ public class FileWordFinder implements Finder<String> {
         return null;
     }
 
+
     @Override
     public String find() {
         return finder.find();
     }
 
-    public Stream<String> findAll() {
+    public Collection<String> findAll() {
         return finder.findAll();
     }
 }

@@ -10,13 +10,21 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/*
-*  Класс - генератор текстовых файлов
+/**
+*  Class - generator of text files
 * */
 @EqualsAndHashCode
 @ToString
 public class TextFileGenerator {
 
+    /**
+     * Writes string to file.
+     *
+     * @param path Input file path.
+     * @param fileSize Size of each output file.
+     * @param words Array of strings {@link String} to upload to file.
+     * @param marker Marker to the start index of word.
+     * */
     private int writeStringsToFile(Path path, int fileSize, String[] words, int marker) throws IOException {
 
         if (marker < 0 || marker >= words.length) throw new ArrayIndexOutOfBoundsException();
@@ -31,12 +39,12 @@ public class TextFileGenerator {
     }
 
     /**
-     * Генерация файла
+     * File generation
      *
-     * @param path путь к входному файлу
-     * @param n количество выходных файлов
-     * @param size размер каждого выходного файла
-     * @param words массив строк {@link String} для выгрузки в файл
+     * @param path Input file path
+     * @param n Number of output files
+     * @param size Size of each output file
+     * @param words Array of strings {@link String} to upload to file
      */
     public void getFile(@NonNull String path, int n, int size, String[] words) throws IOException {
         int counterFiles = 0;

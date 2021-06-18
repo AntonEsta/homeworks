@@ -8,6 +8,9 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Random;
 
+/**
+ *  Class - generator of word
+ * */
 @RequiredArgsConstructor
 @Getter
 @FieldDefaults(level= AccessLevel.PRIVATE)
@@ -21,8 +24,8 @@ public class WordGenerator implements Generator<String> {
     }
 
     /**
-     * Получить случайную букву
-     * @return символ типа {@code char}
+     * Get a random letter
+     * @return character {@code char}
      */
     private char getSomeLetter() {
         char[]latinLowerCaseCharArray= {'a','b','c','d','e','f','g','h','i','j','k','l','m',
@@ -32,8 +35,8 @@ public class WordGenerator implements Generator<String> {
     }
 
     /**
-     * Генерация слова
-     * @return последовательность типа {@link String}
+     * Generating a word
+     * @return sequence type {@link String}
      */
     @Override
     public String generate() {

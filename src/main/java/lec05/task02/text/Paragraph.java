@@ -1,6 +1,5 @@
 package lec05.task02.text;
 
-import lec05.task02.generators.ParagraphGenerator;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldDefaults;
@@ -13,16 +12,20 @@ public class Paragraph{
 
     final LinkedList<Sentence> sentences = new LinkedList<>();
 
-    public Paragraph append(Sentence sentence) {
+    /** Appends new string to end the collection
+     * @param sentence {@link Sentence} for appending.
+     * */
+    public void append(Sentence sentence) {
         Objects.requireNonNull(sentence);
         sentences.add(sentence);
-        return this;
     }
 
+    /** Returns count of sentences. */
     public int size() {
         return sentences.size();
     }
 
+    /** Returns string looks like simple paragraph. */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -23,8 +23,8 @@ public class ParagraphGenerator implements Generator<Paragraph> {
     }
 
     /**
-     * Генерирует параграф текста
-     * @return сгенерированный параграф текста типа {@link Paragraph}
+     * Generates a paragraph of text
+     * @return Generated paragraph of text type {@link Paragraph}
      */
     @Override
     public Paragraph generate() {

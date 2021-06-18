@@ -6,7 +6,6 @@ import lombok.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
 /**
  * The class to search for words in a character sequence.
@@ -32,18 +31,15 @@ public class WordFinder implements Finder<String> {
         return matcher.group();
     }
 
-    public void reset() {
-        matcher.reset();
-    }
-
-    public Stream<String> findAll() {
-        LinkedList<String> list = new LinkedList<>();
+    public Collection<String> findAll() {
+        Collection<String> list = new LinkedList<>();
         String word;
         while ((word = next()) != null) {
             list.add(word);
         }
-        return list.stream();
+        return list;
     }
+
 
     @Override
     public String find() {

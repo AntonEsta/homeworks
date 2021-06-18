@@ -1,6 +1,5 @@
 package lec05.task02.text;
 
-import lec05.task02.generators.ParagraphGenerator;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldDefaults;
@@ -11,14 +10,16 @@ import java.util.Objects;
 @FieldDefaults(level= AccessLevel.PRIVATE)
 public class Text {
 
+    /** Collection of paragraphs. */
     final LinkedList<Paragraph> paragraphs = new LinkedList<>();
 
-    public Text append(Paragraph paragraph) {
+    /** Appends new paragraph to end the collection. */
+    public void append(Paragraph paragraph) {
         Objects.requireNonNull(paragraph);
         paragraphs.add(paragraph);
-        return this;
     }
 
+    /** Returns string looks like simple text .*/
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

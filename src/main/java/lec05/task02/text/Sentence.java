@@ -15,10 +15,15 @@ public class Sentence {
 
     final LinkedList<String> words = new LinkedList<>();
 
-    public boolean append(@NonNull String str) {
-        return words.add(str);
+    /** Appends new string to end the collection
+     * @param str String for appending.
+     * */
+    public void append(@NonNull String str) {
+        words.add(str);
     }
 
+
+    /** Returns count of words without any non-words strings. */
     public int size() {
         long filteredSize = words.stream()
                 .filter(Sentence::isWord)
@@ -26,25 +31,47 @@ public class Sentence {
         return (int) filteredSize;
     }
 
-    public String set(int index, String word) {
-        return words.set(index, word);
+    /**
+     * Insets new word on index position.
+     * The string on index position will be rewrite.
+     * @param index Place for inserting
+     * @param word String for inserting
+     * */
+    public void set(int index, String word) {
+        words.set(index, word);
     }
 
+    /**
+     *  Return string from index position.
+     * @param index Place of string
+     * */
     public String get(int index) {
         return words.get(index);
     }
 
-    public String replace(int index, int start, int end, String str) {
+    /**
+     * Replaces substring specified by index from start to end char.
+     * @param start The beginning index, inclusive.
+     * @param end The ending index, exclusive.
+     * @param str String that will replace previous contents.
+     * */
+    public void replace(int index, int start, int end, String str) {
         StringBuilder sb = new StringBuilder(words.get(index));
         sb.replace(start, end, str);
-        return set(index, sb.toString());
+        set(index, sb.toString());
     }
 
+    /**
+     * Checks a string against a word format.
+     * @param str The string to be matched.
+     * @return True if string is word.
+     */
     private static boolean isWord(String str) {
         Matcher matcher = Pattern.compile("[A-Za-zА-Яа-я]+").matcher(str);
         return matcher.find();
     }
 
+    /** Returns string looks like simple sentence. */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -9,18 +9,27 @@ import lombok.ToString;
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @EqualsAndHashCode
 @ToString
 public final class IoFileSorter implements FileSorter {
 
-    private void writeFile(@NonNull String outputFileName, @NonNull Set<String> strings) throws NullPointerException, IOException {
+
+    /**
+     * Writes data to file. Default charset - UTF-8.
+     * Exists output file will overwriting.
+     * @param outputFileName file name for writes data.
+     * @param strings array of {@link Iterable} data.
+     * @throws NullPointerException if no data for writing.
+     * @throws IOException if an I/O error occurs writing to or creating the file.
+     */
+    private void writeFile(@NonNull String outputFileName, @NonNull Iterable<? extends CharSequence> strings)
+            throws NullPointerException, IOException {
         try (FileWriter writer = new FileWriter(outputFileName);
-             Writer bw = new BufferedWriter(writer)) {
+            Writer bw = new BufferedWriter(writer)) {
             strings.forEach((s) -> {
                         try {
-                            bw.append(s.toLowerCase(Locale.ROOT));
+                            bw.append(String.valueOf(s).toLowerCase(Locale.ROOT));
                             bw.append('\n');
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -30,14 +39,19 @@ public final class IoFileSorter implements FileSorter {
         }
     }
 
+    /** Sorts words from input file and write into output file.
+     *
+     * @param inputFileName String path to input file.
+     * @param outputFileName String path to output file.
+     * */
     @Override
     public void sort(@NonNull String inputFileName, @NonNull String outputFileName){
         FileWordFinder fwf = new FileWordFinder(inputFileName);
-        LinkedHashSet<String> stream = fwf.findAll()
-                                          .sorted(Comparator.naturalOrder())
-                                          .collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<String> set = fwf.findAll().stream()
+                            .sorted(Comparator.naturalOrder())
+                            .collect(Collectors.toCollection(LinkedHashSet::new));
         try {
-            writeFile(outputFileName, stream);
+            writeFile(outputFileName, set);
         } catch (IOException e) {
             e.printStackTrace();
         }

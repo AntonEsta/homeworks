@@ -8,8 +8,8 @@ import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 import java.util.Random;
 
-/*
- *  Класс - генератор текстовых файлов
+/**
+ *  Class - generator of text
  * */
 @Getter
 @FieldDefaults(level=AccessLevel.PRIVATE)
@@ -23,8 +23,8 @@ public class TextGenerator implements Generator<Text> {
     }
 
     /**
-     *  Генерация текста
-     * @return сгенерированный текст типа {@link Text}
+     *  Text generation
+     * @return generated text like {@link Text}
      */
     @Override
     public Text generate() {
