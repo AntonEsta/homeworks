@@ -1,51 +1,50 @@
 package lec06.task01;
 
+import lec06.task01.factorial.Factorials;
+
 import java.math.BigInteger;
 import java.util.*;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutionException;
 
 public class Main {
+
     public static void main(String[] args) {
 
-        LinkedHashSet<BigInteger> values = new LinkedHashSet<>();
+        // Calculate single factorial.
+        try {
+            System.out.println("10! = " + Factorials.factorial(10));
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        Collection<Integer> values = new LinkedHashSet<>();
         Random random = new Random();
         int randomBound = 100;
+        final int valCount = 10;
 
-        for (int i = 0; i < 100; i++) {
-            values.add(BigInteger.valueOf(random.nextInt(randomBound)));
+        // Set the values.
+        while (values.size() < valCount) {
+            values.add(random.nextInt(randomBound));
         }
 
-        LinkedList<Callable<BigInteger>> callables = new LinkedList<>();
+        // Print the original values.
+        System.out.printf("The start values %s %n", values);
 
-        for (BigInteger val : values) {
-            callables.addFirst(new Factorial<>(val.intValue()));
-        }
+        List<BigInteger> results = new ArrayList<>();
 
-        ExecutorService pool = Executors.newFixedThreadPool(values.size());
-
-        ArrayList<Future<BigInteger>> futures = new ArrayList<>();
-
-        try {
-            futures = (ArrayList<Future<BigInteger>>) pool.invokeAll(callables);
-        } catch (Exception e) {
-            e.getStackTrace();
-        }
-
-        pool.shutdown();
-
-        for (BigInteger bigint : values) {
-            System.out.println(bigint);
-        }
+        // Start getFactorials method.
         System.out.println();
-        for (Future<BigInteger> f : futures) {
-            try {
-                System.out.println(f.get());
-            } catch (Exception e) {
-                e.getStackTrace();
-            }
+        System.out.println("-- Start getFactorials() method...");
+        try {
+            results = Factorials.getFactorials(values);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
         }
+        System.out.println("-- End getFactorial() method work!");
 
-        System.out.println(Factorials.getFact(values));
+        // Print the end values
+        System.out.println("The end values.");
+        results.forEach(System.out::println);
     }
+
 }

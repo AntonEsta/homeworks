@@ -1,0 +1,8 @@
+test/main.java
+ test.test
+lec06/task01/factorial/Factorials.java
+ lec06.task01.factorial.Factorials
+lec06/task01/Main.java
+ lec06.task01.Main
+lec06/task01/factorial/Factorial.java
+ lec06.task01.factorial.Factorial
