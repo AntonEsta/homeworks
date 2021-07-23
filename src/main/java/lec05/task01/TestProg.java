@@ -1,6 +1,8 @@
 package lec05.task01;
 
-import java.io.IOException;
+import lec05.task01.sorters.classes.IoFileSorter;
+import lec05.task01.sorters.classes.NioFileSorter;
+import lec05.task01.sorters.interfaces.FileSorter;
 
 public class TestProg {
     public static void main(String[] args) {
@@ -10,23 +12,15 @@ public class TestProg {
         final String inputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/input-skazka-o-care-saltane.txt";
         final String outputSkazka = "/home/esta/IdeaProjects/homeworks/src/main/resources/output-skazka-o-care-saltane.txt";
 
-        try {
-            System.out.println(FileSorter.ioSort(inputLorem, outputLorem));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        FileSorter iosort = new IoFileSorter();
+        FileSorter niosort = new NioFileSorter();
 
-        try {
-            System.out.println(FileSorter.ioSort(inputSkazka, outputSkazka));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("IoFileSorter Class...");
+        iosort.sort(inputLorem, outputLorem);
+        iosort.sort(inputSkazka, outputSkazka);
 
-        try {
-            System.out.println(FileSorter.nioSort(inputSkazka, outputSkazka));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println("NioFileSorter Class...");
+        niosort.sort(inputSkazka, outputSkazka);
 
     }
 }

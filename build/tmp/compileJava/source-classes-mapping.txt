@@ -1,0 +1,36 @@
+lec05/task01/finders/interfaces/Finder.java
+ lec05.task01.finders.interfaces.Finder
+lec05/task02/generators/TextFileGenerator.java
+ lec05.task02.generators.TextFileGenerator
+lec05/task02/generators/WordGenerator.java
+ lec05.task02.generators.WordGenerator
+test/main.java
+ test.test
+lec05/task02/generators/interfaces/Generator.java
+ lec05.task02.generators.interfaces.Generator
+lec05/task01/sorters/interfaces/FileSorter.java
+ lec05.task01.sorters.interfaces.FileSorter
+lec05/task02/TestProg.java
+ lec05.task02.TestProg
+lec05/task02/generators/SentenceGenerator.java
+ lec05.task02.generators.SentenceGenerator
+lec05/task02/text/Sentence.java
+ lec05.task02.text.Sentence
+lec05/task02/generators/ParagraphGenerator.java
+ lec05.task02.generators.ParagraphGenerator
+lec05/task02/text/Paragraph.java
+ lec05.task02.text.Paragraph
+lec05/task02/text/Text.java
+ lec05.task02.text.Text
+lec05/task02/generators/TextGenerator.java
+ lec05.task02.generators.TextGenerator
+lec05/task01/sorters/classes/NioFileSorter.java
+ lec05.task01.sorters.classes.NioFileSorter
+lec05/task01/sorters/classes/IoFileSorter.java
+ lec05.task01.sorters.classes.IoFileSorter
+lec05/task01/finders/classes/WordFinder.java
+ lec05.task01.finders.classes.WordFinder
+lec05/task01/finders/classes/FileWordFinder.java
+ lec05.task01.finders.classes.FileWordFinder
+lec05/task01/TestProg.java
+ lec05.task01.TestProg
