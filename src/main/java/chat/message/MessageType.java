@@ -1,8 +1,9 @@
-package chat;
+package chat.message;
 
+/**
+ * Enumeration of valid message formats.
+ */
 public enum MessageType {
-
-    NONE,
     REGISTRATION_REQUEST,
     REGISTRATION_CONFIRMED,
     REGISTRATION_REFUSED,
@@ -10,10 +11,5 @@ public enum MessageType {
     WHOIS,
     MESSAGE,
     ACKNOWLEDGMENT,
-    REQUEST_NEW;
-
-    public boolean isAcknowledgment() {
-        return this.equals(MessageType.ACKNOWLEDGMENT);
-    }
-
+    REQUEST_NEW
 }

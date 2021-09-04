@@ -1,27 +1,39 @@
-package chat;
+package chat.messanger;
 
-import chat.data.MessagePacket;
-import chat.exception.MessageFormatException;
+import chat.message.MessagePacket;
 import lombok.NonNull;
 
 import java.io.IOException;
 import java.net.Socket;
 
+/**
+ * Messenger implementation with confirming delivery.
+ */
 public class ConfirmingMessenger extends SimpleMessenger {
-
 
     public ConfirmingMessenger(@NonNull Socket socket) throws IOException {
         super(socket);
     }
 
-    private void sendAckMessage(@NonNull MessagePacket message) throws IOException, MessageConfirmationException {
-        if ( message.isAckMessage() ) return; //throw new MessageConfirmationException("The message does not need confirmation.");
+    public ConfirmingMessenger(@NonNull Socket socket, int socketTimeout) throws IOException {
+        super(socket, socketTimeout);
+    }
+
+    /**
+     * Sends acknowledgment message.
+     * @param message message to be confirmed.
+     */
+    private void sendAckMessage(@NonNull MessagePacket message) {
+        if ( message.isAckMessage() ) return;
         MessagePacket msg = MessagePacket.newAcknowledgmentMessage(message.getMessageID());
         sendMessage(msg);
     }
 
-    private void getAckMessage(@NonNull MessagePacket msg) throws IOException, ClassNotFoundException, MessageConfirmationException, MessageFormatException {
-        // TODO разобрать экзепшены
+    /**
+     * Sends acknowledgment message.
+     * @param msg message to be confirmed.
+     */
+    private void getAckMessage(@NonNull MessagePacket msg) throws MessageConfirmationException {
         if (msg.isAckMessage()) return;
 
         MessagePacket receiveMessage = getMessage();
@@ -30,22 +42,21 @@ public class ConfirmingMessenger extends SimpleMessenger {
             if ( receiveMessage.isAckMessage(msg.getMessageID()) ) return;
         }
         throw new MessageConfirmationException("Received a message other than acknowledgment.");
-//        throw new MessageFormatException();
     }
 
     @Override
-    public void sendMessage(@NonNull MessagePacket msg) {
+    public void sendMessage(@NonNull MessagePacket msg) throws MessageConfirmationException {
         // send the message
         super.sendMessage(msg);
         // wait conformation of delivery
         if (!msg.isAckMessage()) {
             try {
                 getAckMessage(msg);
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (Exception e) {
                 throw new MessageConfirmationException("No confirmation of message delivery.", e);
             }
         }
-    }
+   }
 
     @Override
     public MessagePacket getMessage() {
@@ -53,11 +64,7 @@ public class ConfirmingMessenger extends SimpleMessenger {
         MessagePacket msg = super.getMessage();
         if (msg == null) return null;
         // send confirmation of delivery
-        try {
-            sendAckMessage(msg);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        sendAckMessage(msg);
         return msg;
     }
 

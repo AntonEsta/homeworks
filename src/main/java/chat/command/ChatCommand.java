@@ -1,10 +1,13 @@
-package chat;
+package chat.command;
 
 import lombok.Data;
 import lombok.NonNull;
 
 import java.util.Arrays;
 
+/**
+ * Class of command for inner use.
+ */
 @Data
 public class ChatCommand {
 
@@ -12,10 +15,12 @@ public class ChatCommand {
     private final String[] arguments;
     private final Object content;
 
-    public static enum Command {
+    public enum Command {
         MESSAGE,
         USER,
-        CLIENT
+        CLIENT,
+        QUIT,
+        HELP
     }
 
     public ChatCommand(@NonNull ChatCommand.Command command, Object content, @NonNull String... arguments) {

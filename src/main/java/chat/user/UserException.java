@@ -1,5 +1,8 @@
-package chat.exception;
+package chat.user;
 
+/**
+ * Exception class of wrong user.
+ */
 public class UserException extends RuntimeException {
     private static final long serialVersionUID = 539989700165700810L;
 
