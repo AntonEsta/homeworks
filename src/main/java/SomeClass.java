@@ -1,0 +1,1 @@
+public class SomeClass implements Worker{ public void doWork(){int i;}}
