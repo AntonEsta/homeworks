@@ -3,6 +3,8 @@ plugins {
     id "io.freefair.lombok" version "6.0.0-m2"
 }
 
+
+
 group 'ru.antonesta'
 version '1.0-SNAPSHOT'
 
@@ -11,6 +13,8 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation 'org.javassist:javassist:3.28.0-GA'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
