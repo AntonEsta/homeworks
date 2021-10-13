@@ -1,9 +1,13 @@
-package lec04.task01;
+package petscardfile.classes.card;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import petscardfile.classes.Person;
+import petscardfile.classes.Pet;
+import petscardfile.classes.exceptions.DuplicateValueException;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
@@ -15,11 +19,28 @@ import java.util.stream.Collectors;
 @FieldDefaults(level=AccessLevel.PRIVATE)
 public class CardFile {
 
-    /*TODO: >? При использовании lombok.var IDE требует кастовать HashMap!
-    * TODO     private var pets = (var) new TreeMap<UUID, Pet>();
-    *  */
-//    private var pets = (var) new TreeMap<UUID, Pet>();
-    final HashMap<@NonNull UUID, Pet> pets = new HashMap<>();
+    private static volatile CardFile cardFile = null;
+
+    final ConcurrentHashMap<@NonNull UUID, Pet> pets = new ConcurrentHashMap<>();
+
+    CardFile(){}
+
+    /**
+     * Return class instance.
+     * @return singleton class instance.
+     */
+    public static synchronized CardFile getInstance(){
+        CardFile instance = cardFile;
+        if (instance == null) {
+            synchronized (CardFile.class) {
+                instance = cardFile;
+                if (instance == null) {
+                    cardFile = instance = new CardFile();
+                }
+            }
+        }
+        return instance;
+    }
 
     /**
      * Добавляет новую карту питомца в картотеку.
@@ -42,7 +63,7 @@ public class CardFile {
      * @param owner владельца питомца типа {@code Person}
      * @return значение ID добавленной карты питомца.
      */
-    public UUID addPet(@NonNull String nickname, @NonNull float weight, @NonNull Person owner) throws Exception {
+    public UUID addPet(@NonNull String nickname, float weight, @NonNull Person owner) throws Exception {
         Pet pet = new Pet(nickname, weight, owner);
         return addPet(pet);
     }

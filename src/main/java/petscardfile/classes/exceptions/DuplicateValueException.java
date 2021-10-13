@@ -1,4 +1,4 @@
-package lec04.task01;
+package petscardfile.classes.exceptions;
 
 public class DuplicateValueException extends Exception {
 
@@ -8,7 +8,4 @@ public class DuplicateValueException extends Exception {
         super(MESSAGE);
     }
 
-    public DuplicateValueException(String message){
-        super(message);
-    }
 }
