@@ -1,7 +1,6 @@
 package petscardfile.classes;
 
 import lombok.*;
-import java.util.Formatter;
 
 @AllArgsConstructor
 @Setter
@@ -17,9 +16,7 @@ public final class Pet {
 
     @Override
     public String toString() {
-        Formatter ft = new Formatter();
-        ft.format("nickname: %6s; weight: %3.1f; owner: [%s] %n", nickname, weight, owner);
-        return ft.toString();
+        return String.format("nickname: %6s; weight: %3.1f; owner: [%s] %n", nickname, weight, owner);
     }
 
 }

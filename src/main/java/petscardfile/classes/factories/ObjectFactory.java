@@ -4,7 +4,7 @@ import petscardfile.classes.*;
 import petscardfile.classes.card.CardFile;
 import petscardfile.classes.enums.Sex;
 
-public class AbstractFactory {
+public class ObjectFactory {
 
     public static Pet createPet(String nickname, float weight, Person owner) {
         return PetFactory.createPet(nickname, weight, owner);

@@ -63,12 +63,13 @@ public class CardFile {
      * @param owner владельца питомца типа {@code Person}
      * @return значение ID добавленной карты питомца.
      */
+    @SuppressWarnings("UnusedDeclaration")
     public UUID addPet(@NonNull String nickname, float weight, @NonNull Person owner) throws Exception {
         Pet pet = new Pet(nickname, weight, owner);
         return addPet(pet);
     }
 
-    /**
+    /** пересмотр кода согласно коментариям
      * Удаляет карту питомца.
      * @param id номер {@link UUID} питомца.
      * @return возвращает {@code true} при успешном удалении карты.
@@ -82,12 +83,11 @@ public class CardFile {
      * @param nickname кличка питомца.
      * @return {@link CardFile} найденных питомцев или {@code null} если негде искать.
      */
-    public HashMap<@NonNull UUID, Pet> findPet(String nickname){
+    public Map<@NonNull UUID, Pet> findPet(String nickname){
         if (pets.isEmpty()) return null;
-        Map<@NonNull UUID, Pet> map = pets.entrySet().stream()
+        return pets.entrySet().stream()
                 .filter(e -> e.getValue().getNickname().equals(nickname))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return new HashMap<>(map);
     }
 
     /**
@@ -98,8 +98,8 @@ public class CardFile {
      * раньше выводит животное, у которого больше вес.
      * @return список животных в отсортированном порядке.
      */
-    public ArrayList<Pet> sortedPetList(){
-        return (ArrayList<Pet>) pets.values().stream()
+    public List<Pet> sortedPetList(){
+        return pets.values().stream()
                 .sorted((p, o) -> {
                     int result = p.getOwner().getName().compareToIgnoreCase(o.getOwner().getName());
                     if (result != 0) return result;
