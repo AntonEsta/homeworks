@@ -6,8 +6,8 @@ import petscardfile.classes.enums.Sex;
 
 public class ObjectFactory {
 
-    public static Pet createPet(String nickname, float weight, Person owner) {
-        return PetFactory.createPet(nickname, weight, owner);
+    public static Pet createPet(String nickname, float weight) {
+        return PetFactory.createPet(nickname, weight);
     }
 
     public static Person createPerson(String name, String surname, int age, Sex sex) {
