@@ -1,0 +1,14 @@
+petscardfile/classes/storages/ifce/IndexedTypedStorage.java
+ petscardfile.classes.storages.ifce.IndexedTypedStorage
+petscardfile/classes/enums/Sex.java
+ petscardfile.classes.enums.Sex
+petscardfile/classes/Person.java
+ petscardfile.classes.Person
+ petscardfile.classes.Person$1
+ petscardfile.classes.Person$Builder
+petscardfile/Main.java
+ petscardfile.Main
+petscardfile/classes/card/CardFile.java
+ petscardfile.classes.card.CardFile
+petscardfile/classes/Pet.java
+ petscardfile.classes.Pet
