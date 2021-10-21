@@ -10,6 +10,7 @@ import petscardfile.classes.Pet;
 import petscardfile.classes.storages.*;
 import petscardfile.classes.storages.impl.*;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -58,6 +59,14 @@ public class CardFile {
         UUID petId = petStorage.add(pet);
         UUID ownerId = personStorage.add(owner);
         relationsStorage.add(petId, ownerId);
+        PersonCard ownerCard = new PersonCard(ownerId, owner);
+        return new PetCard(petId, pet, ownerCard);
+    }
+
+    public PetCard getPetCard(UUID petId) {
+        Pet pet = petStorage.get(petId);
+        final UUID ownerId = relationsStorage.get(petId);
+        final Person owner = personStorage.get(ownerId);
         PersonCard ownerCard = new PersonCard(ownerId, owner);
         return new PetCard(petId, pet, ownerCard);
     }

@@ -62,4 +62,5 @@ abstract public class AbstractIndexedTypedStorage<I, T> implements IndexedTypedS
         Map<I,T> mapForIteration = new ConcurrentHashMap<>(map);
         return mapForIteration.values().iterator();
     }
+
 }
