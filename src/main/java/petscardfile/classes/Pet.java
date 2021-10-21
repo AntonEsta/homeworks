@@ -10,7 +10,6 @@ public final class Pet {
 
     @NonNull private String nickname;    // кличка
     private float weight;       // вес
-//    @NonNull private Person owner;
 
     /* Override Methods */
 

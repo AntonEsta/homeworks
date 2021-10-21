@@ -14,10 +14,6 @@ public class ObjectFactory {
         return PersonFactory.createPerson(name, surname, age, sex);
     }
 
-    public static Person createPerson(String name, String patronymic, String surname, int age, Sex sex) {
-        return PersonFactory.createPerson(name, patronymic, surname, age, sex);
-    }
-
     public static CardFile createCardFile() {
         return CardFile.getInstance();
     }
