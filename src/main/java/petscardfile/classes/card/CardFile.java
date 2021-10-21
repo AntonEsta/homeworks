@@ -8,8 +8,7 @@ import lombok.experimental.FieldDefaults;
 import petscardfile.classes.Person;
 import petscardfile.classes.Pet;
 import petscardfile.classes.storages.*;
-import petscardfile.classes.storages.ifce.IndexedTypedStorage;
-import petscardfile.classes.storages.impl.RelationStorage;
+import petscardfile.classes.storages.impl.*;
 
 import java.util.List;
 import java.util.Map;
@@ -25,9 +24,9 @@ import java.util.stream.Collectors;
 @FieldDefaults(level=AccessLevel.PRIVATE)
 public class CardFile {
 
-    static final IndexedTypedStorage<UUID, Person> personStorage    = StorageFactory.newPersonStorage();
-    static final IndexedTypedStorage<UUID, Pet> petStorage    = StorageFactory.newPetStorage();
-    static final RelationStorage relationsStorage   = StorageFactory.newRelationStorage();
+    static final PersonStorage      personStorage    = StorageFactory.newPersonStorage();
+    static final PetStorage         petStorage    = StorageFactory.newPetStorage();
+    static final RelationStorage    relationsStorage   = StorageFactory.newRelationStorage();
 
     static volatile CardFile cardFile = null;
 
