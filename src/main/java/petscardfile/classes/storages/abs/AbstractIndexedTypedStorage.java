@@ -3,10 +3,13 @@ package petscardfile.classes.storages.abs;
 import petscardfile.classes.storages.ifce.IndexedTypedStorage;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Spliterator;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
 
-abstract public class AbstractIndexedTypedStorage<I, T> implements IndexedTypedStorage<I,T> {
+abstract public class AbstractIndexedTypedStorage<I, T> implements IndexedTypedStorage<I,T>, Iterable<T> {
 
     protected final Map<I, T> map = new ConcurrentHashMap<>();
 
@@ -44,4 +47,19 @@ abstract public class AbstractIndexedTypedStorage<I, T> implements IndexedTypedS
         return map.get(id);
     }
 
+    @Override
+    public void forEach(Consumer<? super T> action) {
+        Iterable.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<T> spliterator() {
+        return Iterable.super.spliterator();
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        Map<I,T> mapForIteration = new ConcurrentHashMap<>(map);
+        return mapForIteration.values().iterator();
+    }
 }

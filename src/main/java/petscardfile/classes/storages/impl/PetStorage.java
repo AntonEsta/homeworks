@@ -5,11 +5,6 @@ import petscardfile.classes.storages.abs.AbstractIndexedTypedStorage;
 
 import java.util.UUID;
 
-public class PetStorage extends AbstractIndexedTypedStorage<UUID, Pet> {
-
-    @Override
-    protected UUID idGenerator() {
-        return UUID.randomUUID();
-    }
+public class PetStorage extends SimpleIndexedStorage<Pet> {
 
 }

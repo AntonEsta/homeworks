@@ -1,9 +1,6 @@
 package petscardfile.classes.storages.ifce;
 
-import petscardfile.classes.Person;
-
 import java.util.Map;
-import java.util.UUID;
 
 public interface IndexedTypedStorage<I,T> {
 
@@ -15,5 +12,5 @@ public interface IndexedTypedStorage<I,T> {
 
     Map<I,T> toMap();
 
-    T get(UUID petId);
+    T get(I id);
 }
