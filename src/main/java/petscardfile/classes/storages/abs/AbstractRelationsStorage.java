@@ -13,6 +13,7 @@ abstract public class AbstractRelationsStorage<I,T> extends AbstractIndexedTyped
         throw new OperationsException("Operation not supported!");
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void add(Object petId, Object ownerId) {
         map.put((I) petId, (T) ownerId);
