@@ -5,6 +5,7 @@ import petscardfile.classes.Pet;
 import petscardfile.classes.card.CardFile;
 import petscardfile.classes.enums.Sex;
 import petscardfile.classes.factories.ObjectFactory;
+import petscardfile.classes.storages.XML;
 
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,8 @@ public class Main {
         System.out.println(petList);
 
         cardFile.removePet(pet);
+
+        cardFile.accept(new XML());
 
     }
 
