@@ -11,16 +11,16 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class XML implements Exporter, Visitor {
+public class XMLPetExporter implements Exporter, Visitor {
 
     private List<PetCard> exportSourceList;
 
-    public XML() {
+    public XMLPetExporter() {
         this.exportSourceList = null;
     }
 
 
-    public XML(@NonNull List<PetCard> exportSourceList) {
+    public XMLPetExporter(@NonNull List<PetCard> exportSourceList) {
         this.exportSourceList = exportSourceList;
     }
 
@@ -40,10 +40,6 @@ public class XML implements Exporter, Visitor {
 
             writer.writeStartElement("Nickname");
             writer.writeCharacters(petCard.getPet().getNickname());
-            writer.writeEndElement();
-
-            writer.writeStartElement("Weight");
-            writer.writeCharacters(String.valueOf(petCard.getPet().getWeight()));
             writer.writeEndElement();
 
             writer.writeStartElement("Weight");
