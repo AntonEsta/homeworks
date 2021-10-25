@@ -10,9 +10,7 @@ import petscardfile.classes.Pet;
 import petscardfile.classes.storages.*;
 import petscardfile.classes.storages.impl.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -22,7 +20,7 @@ import java.util.stream.Collectors;
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level=AccessLevel.PRIVATE)
-public class CardFile {
+public class CardFile implements Visitor, Iterable<PetCard> {
 
     static final PersonStorage      personStorage    = StorageFactory.newPersonStorage();
     static final PetStorage         petStorage    = StorageFactory.newPetStorage();
@@ -58,6 +56,14 @@ public class CardFile {
         UUID petId = petStorage.add(pet);
         UUID ownerId = personStorage.add(owner);
         relationsStorage.add(petId, ownerId);
+        PersonCard ownerCard = new PersonCard(ownerId, owner);
+        return new PetCard(petId, pet, ownerCard);
+    }
+
+    public PetCard getPetCard(UUID petId) {
+        Pet pet = petStorage.get(petId);
+        final UUID ownerId = relationsStorage.get(petId);
+        final Person owner = personStorage.get(ownerId);
         PersonCard ownerCard = new PersonCard(ownerId, owner);
         return new PetCard(petId, pet, ownerCard);
     }
@@ -118,4 +124,17 @@ public class CardFile {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public Iterator<PetCard> iterator() {
+        List<PetCard> list = new ArrayList<>();
+        for (UUID id : petStorage.toMap().keySet()) {
+            list.add(getPetCard(id));
+        }
+        return list.iterator();
+    }
+
+    @Override
+    public void accept(Visitor v) {
+        v.accept(this);
+    }
 }

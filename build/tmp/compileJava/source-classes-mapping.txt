@@ -4,12 +4,16 @@ petscardfile/classes/card/PersonCard.java
  petscardfile.classes.card.PersonCard
 petscardfile/classes/card/PetCard.java
  petscardfile.classes.card.PetCard
-petscardfile/classes/enums/Sex.java
- petscardfile.classes.enums.Sex
 petscardfile/classes/exceptions/DuplicateValueException.java
  petscardfile.classes.exceptions.DuplicateValueException
+petscardfile/classes/enums/Sex.java
+ petscardfile.classes.enums.Sex
 petscardfile/classes/factories/PetFactory.java
  petscardfile.classes.factories.PetFactory
+petscardfile/classes/storages/XML.java
+ petscardfile.classes.storages.XML
+petscardfile/classes/storages/Visitor.java
+ petscardfile.classes.storages.Visitor
 petscardfile/classes/Person.java
  petscardfile.classes.Person
  petscardfile.classes.Person$1
@@ -30,12 +34,12 @@ petscardfile/classes/storages/impl/PetStorage.java
  petscardfile.classes.storages.impl.PetStorage
 petscardfile/classes/storages/impl/RelationStorage.java
  petscardfile.classes.storages.impl.RelationStorage
-petscardfile/classes/storages/ifce/Storage.java
- petscardfile.classes.storages.ifce.Storage
 petscardfile/classes/storages/ifce/IndexedTypedStorage.java
  petscardfile.classes.storages.ifce.IndexedTypedStorage
 petscardfile/classes/storages/impl/SimpleIndexedStorage.java
  petscardfile.classes.storages.impl.SimpleIndexedStorage
+petscardfile/classes/storages/Exporter.java
+ petscardfile.classes.storages.Exporter
 petscardfile/classes/storages/StorageFactory.java
  petscardfile.classes.storages.StorageFactory
 petscardfile/Main.java
