@@ -1,13 +1,18 @@
 package petscardfile.classes.card;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import petscardfile.classes.Person;
 import petscardfile.classes.Pet;
-import petscardfile.classes.exceptions.DuplicateValueException;
+import petscardfile.classes.storages.*;
+import petscardfile.classes.storages.impl.*;
 
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -19,11 +24,13 @@ import java.util.stream.Collectors;
 @FieldDefaults(level=AccessLevel.PRIVATE)
 public class CardFile {
 
-    private static volatile CardFile cardFile = null;
+    static final PersonStorage      personStorage    = StorageFactory.newPersonStorage();
+    static final PetStorage         petStorage    = StorageFactory.newPetStorage();
+    static final RelationStorage    relationsStorage   = StorageFactory.newRelationStorage();
 
-    final ConcurrentHashMap<@NonNull UUID, Pet> pets = new ConcurrentHashMap<>();
+    static volatile CardFile cardFile = null;
 
-    CardFile(){}
+    private CardFile(){}
 
     /**
      * Return class instance.
@@ -47,35 +54,21 @@ public class CardFile {
      * @param pet карта для добавления в картотеку.
      * @return значение {@link UUID} добавленной карты питомца или {@code null} при не удачном добавлении.
      */
-    public UUID addPet(@NonNull Pet pet) throws DuplicateValueException {
-        if (!pets.isEmpty() & pets.containsValue(pet)) throw new DuplicateValueException();
-        UUID id;
-        do {
-            id = UUID.randomUUID();
-        } while (pets.containsKey(id));
-        return (pets.put(id, pet) != null) ? id : null;
+    public PetCard addPet(@NonNull Pet pet, @NonNull Person owner) {
+        UUID petId = petStorage.add(pet);
+        UUID ownerId = personStorage.add(owner);
+        relationsStorage.add(petId, ownerId);
+        PersonCard ownerCard = new PersonCard(ownerId, owner);
+        return new PetCard(petId, pet, ownerCard);
     }
 
-    /**
-     * Добавляет новую карту питомца в картотеку.
-     * @param nickname имя питомца типа {@code String}
-     * @param weight вес питомца типа {@code float}
-     * @param owner владельца питомца типа {@code Person}
-     * @return значение ID добавленной карты питомца.
+    /** Удаляет карту питомца.
+     * @param pet питомец.
      */
-    @SuppressWarnings("UnusedDeclaration")
-    public UUID addPet(@NonNull String nickname, float weight, @NonNull Person owner) throws Exception {
-        Pet pet = new Pet(nickname, weight, owner);
-        return addPet(pet);
-    }
-
-    /** пересмотр кода согласно коментариям
-     * Удаляет карту питомца.
-     * @param id номер {@link UUID} питомца.
-     * @return возвращает {@code true} при успешном удалении карты.
-     */
-    public boolean deletePet(UUID id) {
-        return pets.remove(id) != null;
+    public void removePet(Pet pet) {
+        UUID petId = petStorage.getIndex(pet);
+        petStorage.remove(petId);
+        relationsStorage.remove(petId);
     }
 
     /**
@@ -83,11 +76,21 @@ public class CardFile {
      * @param nickname кличка питомца.
      * @return {@link CardFile} найденных питомцев или {@code null} если негде искать.
      */
-    public Map<@NonNull UUID, Pet> findPet(String nickname){
-        if (pets.isEmpty()) return null;
-        return pets.entrySet().stream()
+    public Map<@NonNull UUID, Pet> findPet(String nickname) {
+        Map<UUID, Pet> petsMap = petStorage.toMap();
+        if (petsMap.isEmpty()) return null;
+        return petsMap.entrySet().stream()
                 .filter(e -> e.getValue().getNickname().equals(nickname))
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+    }
+
+    private Person getOwnerByPet(Pet pet) {
+        try {
+            final UUID petId = petStorage.getIndex(pet);
+            return personStorage.get(petId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**
@@ -99,9 +102,13 @@ public class CardFile {
      * @return список животных в отсортированном порядке.
      */
     public List<Pet> sortedPetList(){
+        Map<UUID, Pet> pets = petStorage.toMap();
         return pets.values().stream()
                 .sorted((p, o) -> {
-                    int result = p.getOwner().getName().compareToIgnoreCase(o.getOwner().getName());
+                    final Person owner1 = getOwnerByPet(p);
+                    final Person owner2 = getOwnerByPet(o);
+                    if (owner1 == null || owner2 == null) return 0;
+                    int result = owner1.getName().compareToIgnoreCase(owner2.getName());
                     if (result != 0) return result;
                     result = p.getNickname().compareToIgnoreCase(o.getNickname());
                     if (result != 0) return result;

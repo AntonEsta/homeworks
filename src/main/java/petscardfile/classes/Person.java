@@ -42,6 +42,7 @@ public class Person {
             this.sex = sex;
         }
 
+        @SuppressWarnings("unused")
         public Builder setPatronymic(String s) {
             this.patronymic = s;
             return this;
