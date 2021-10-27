@@ -10,8 +10,6 @@ petscardfile/classes/enums/Sex.java
  petscardfile.classes.enums.Sex
 petscardfile/classes/factories/PetFactory.java
  petscardfile.classes.factories.PetFactory
-petscardfile/classes/storages/XML.java
- petscardfile.classes.storages.XML
 petscardfile/classes/storages/Visitor.java
  petscardfile.classes.storages.Visitor
 petscardfile/classes/Person.java
@@ -40,9 +38,13 @@ petscardfile/classes/storages/impl/SimpleIndexedStorage.java
  petscardfile.classes.storages.impl.SimpleIndexedStorage
 petscardfile/classes/storages/Exporter.java
  petscardfile.classes.storages.Exporter
+petscardfile/classes/storages/XMLPetExporter.java
+ petscardfile.classes.storages.XMLPetExporter
 petscardfile/classes/storages/StorageFactory.java
  petscardfile.classes.storages.StorageFactory
 petscardfile/Main.java
  petscardfile.Main
 petscardfile/classes/card/CardFile.java
  petscardfile.classes.card.CardFile
+petscardfile/classes/storages/JSONPetExporter.java
+ petscardfile.classes.storages.JSONPetExporter
