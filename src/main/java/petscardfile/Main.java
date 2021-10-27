@@ -1,5 +1,7 @@
 package petscardfile;
 
+import com.github.cliftonlabs.json_simple.Jsoner;
+import lombok.SneakyThrows;
 import petscardfile.classes.Person;
 import petscardfile.classes.Pet;
 import petscardfile.classes.card.CardFile;
@@ -8,12 +10,16 @@ import petscardfile.classes.factories.ObjectFactory;
 import petscardfile.classes.storages.JSONPetExporter;
 import petscardfile.classes.storages.XMLPetExporter;
 
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 public class Main {
 
+    @SneakyThrows
     public static void main(String[] args) {
 
         CardFile cardFile = ObjectFactory.createCardFile();
@@ -51,6 +57,10 @@ public class Main {
         cardFile.accept(new XMLPetExporter());
 
         cardFile.accept(new JSONPetExporter());
+
+        Writer writer = Files.newBufferedWriter(Paths.get(cardFile.getClass().getSimpleName()+ ".json"));
+
+        Jsoner.serialize(cardFile, writer);
 
     }
 
