@@ -1,5 +1,6 @@
 package petscardfile.classes.card;
 
+import com.github.cliftonlabs.json_simple.Jsonable;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
@@ -10,6 +11,8 @@ import petscardfile.classes.Pet;
 import petscardfile.classes.storages.*;
 import petscardfile.classes.storages.impl.*;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,7 +23,7 @@ import java.util.stream.Collectors;
 @ToString
 @EqualsAndHashCode
 @FieldDefaults(level=AccessLevel.PRIVATE)
-public class CardFile implements Visitor, Iterable<PetCard> {
+public class CardFile implements Visitor, Iterable<PetCard>, Jsonable {
 
     static final PersonStorage      personStorage    = StorageFactory.newPersonStorage();
     static final PetStorage         petStorage    = StorageFactory.newPetStorage();
@@ -137,4 +140,35 @@ public class CardFile implements Visitor, Iterable<PetCard> {
     public void accept(Visitor v) {
         v.accept(this);
     }
+
+    @Override
+    public String toJson() {
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append("{ \"Pet\": [");
+
+        Iterator<PetCard> iterator = this.iterator();
+
+        while ( iterator.hasNext() ) {
+            PetCard petCard = iterator.next();
+            stringBuilder.append("{")
+                            .append("\"Id\": \"").append(petCard.getId()).append("\",").append("\n")
+                            .append("\"Nickname\": \"").append(petCard.getPet().getNickname()).append("\",").append("\n")
+                            .append("\"Weight\": ").append(petCard.getPet().getWeight()).append("\n")
+            .append("}");
+            if (iterator.hasNext()) stringBuilder.append(",\n");
+
+        }
+
+        stringBuilder.append("]}");
+
+        return stringBuilder.toString();
+    }
+
+    @Override
+    public void toJson(Writer writable) throws IOException {
+        writable.append(this.toJson());
+        writable.flush();
+    }
+
 }
